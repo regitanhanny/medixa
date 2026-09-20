@@ -1,0 +1,1031 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#F6F4F0">
+<title>MEDIXA · Rumah Sakit Mini</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%92%96%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400..700&family=Inter:wght@400..800&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0}
+:root{--bg:#F6F4F0;--card:#fff;--ink:#1E2A2D;--mut:#6E7A7C;--line:#E5E1DA;--pink:#C98E7E;--pink2:#F2E7E2;--mint:#8FB6A6;--mint2:#E7EFEA;--lav:#94A5BE;--lav2:#E9ECF2;--but:#DFC38F;--but2:#F6EFE1;--red:#A8534A;--red2:#F1E3E0;--ok:#47735D;--r:20px;--f1:'Fraunces','Iowan Old Style',Georgia,serif;--f2:'Inter',system-ui,-apple-system,'Segoe UI',sans-serif}
+html{-webkit-text-size-adjust:100%}
+body{font-family:var(--f2);color:var(--ink);background:var(--bg);background-image:radial-gradient(circle at 8% 0,#EDE5E0 0,transparent 42%),radial-gradient(circle at 100% 12%,#E6EDE8 0,transparent 38%);min-height:100vh;font-size:15px;line-height:1.55;letter-spacing:-.005em;-webkit-font-smoothing:antialiased}
+body.noscroll{overflow:hidden}
+h1,h2,h3,h4{font-family:var(--f1);font-weight:600;line-height:1.18;letter-spacing:-.015em}
+h2.ttl{font-size:26px;margin:14px 0 4px}
+h3{font-size:18px;margin-bottom:8px}
+h3.sec{margin:22px 0 4px;font-size:17px}
+button{font:inherit;color:inherit;cursor:pointer;border:0;background:none}
+input,select,textarea{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--lav);outline-offset:2px}
+.mut{color:var(--mut)}.sm{font-size:13px}.tiny{font-size:12px;color:var(--mut)}
+.center{text-align:center}
+
+/* buttons */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:11px 20px;border-radius:999px;font-weight:800;background:var(--lav);border:2.5px solid var(--ink);box-shadow:0 4px 0 var(--ink);transition:transform .12s,box-shadow .12s;font-size:15px;text-align:center}
+.btn:active{transform:translateY(3px);box-shadow:0 1px 0 var(--ink)}
+.btn.pink{background:var(--pink)}.btn.mint{background:var(--mint)}.btn.but{background:var(--but)}.btn.ghost{background:#fff}.btn.red{background:var(--red);color:#fff}
+.btn.sm{padding:6px 14px;font-size:13px;box-shadow:0 3px 0 var(--ink)}
+.btn.block{width:100%;margin-top:6px}
+.btn[disabled]{opacity:.4;pointer-events:none}
+
+/* cards */
+.card{background:var(--card);border:2px solid var(--ink);border-radius:var(--r);padding:16px;margin:12px 0;box-shadow:0 4px 0 rgba(30,42,45,.10)}
+.card.pink{background:var(--pink2)}.card.mint{background:var(--mint2)}.card.lav{background:var(--lav2)}.card.but{background:var(--but2)}.card.red{background:var(--red2)}
+.card.clickable{cursor:pointer}
+.card h3{display:flex;align-items:center;gap:6px}
+
+/* form */
+.form{display:block}
+.field{display:flex;flex-direction:column;gap:5px;margin-bottom:12px;min-width:0}
+.field>label{font-weight:800;font-size:13px}
+.field label small{font-weight:600;color:var(--mut);margin-left:6px}
+input,select,textarea{width:100%;padding:10px 13px;border:2px solid var(--ink);border-radius:14px;background:#fff}
+input[type=range]{padding:0;accent-color:var(--pink);border:0;height:28px}
+input[type=checkbox],input[type=radio]{width:auto}
+textarea{resize:vertical}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.row3{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.hint{font-size:12px;color:var(--mut);margin-top:-6px;margin-bottom:10px;min-height:16px}
+.seg{display:flex;gap:8px}
+.seg label{flex:1}
+.seg input{display:none}
+.seg span{display:block;text-align:center;padding:10px;border:2px solid var(--ink);border-radius:14px;background:#fff;font-weight:700;cursor:pointer}
+.seg input:checked+span{background:var(--pink2);box-shadow:0 3px 0 var(--ink)}
+.chk{display:flex;gap:10px;align-items:center;padding:10px 12px;border:2px solid var(--line);border-radius:14px;margin-bottom:8px;background:#fff;cursor:pointer;font-weight:600}
+.chk input{width:20px;height:20px;accent-color:var(--pink);flex:none}
+.chk:has(input:checked){border-color:var(--ink);background:var(--mint2)}
+fieldset{border:2px dashed var(--line);border-radius:16px;padding:12px 12px 2px;margin-bottom:12px;min-width:0}
+legend{font-family:var(--f1);font-weight:600;padding:0 8px}
+
+/* badge / pill */
+.badge{display:inline-block;padding:2px 10px;border-radius:999px;font-size:12px;font-weight:800;border:2px solid var(--ink);white-space:nowrap}
+.badge.lav{background:var(--lav2)}.badge.butter{background:var(--but)}.badge.mint{background:var(--mint)}.badge.ok{background:#CFE3D7}.badge.pink{background:var(--pink2)}.badge.red{background:var(--red);color:#fff}
+.pill{display:inline-block;padding:6px 12px;border-radius:12px;font-weight:700;font-size:13px}
+.pill.lav{background:var(--lav2)}.pill.mint{background:var(--mint2)}.pill.but{background:var(--but2)}.pill.red{background:var(--red2)}
+
+/* mascot */
+.dixa{width:96px;height:96px;flex:none}
+.dixa.sm{width:44px;height:44px}.dixa.md{width:72px;height:72px}.dixa.big{width:150px;height:150px;animation:bob 3.2s ease-in-out infinite}
+@keyframes bob{0%,100%{transform:translateY(0) rotate(-2deg)}50%{transform:translateY(-8px) rotate(2deg)}}
+@media(prefers-reduced-motion:reduce){.dixa.big{animation:none}*{transition:none!important}}
+
+/* landing + login */
+.landing,.loginw{max-width:560px;margin:0 auto;padding:36px 18px 60px;text-align:center}
+.logo{font-family:var(--f1);font-weight:700;font-size:52px;letter-spacing:0;color:var(--ink);text-shadow:2px 2px 0 var(--pink)}
+.tagline{color:var(--mut);margin:4px 0 26px}
+.roles{display:grid;gap:14px;margin-top:14px}
+.role{display:flex;align-items:center;gap:14px;text-align:left;padding:16px 18px;border:2.5px solid var(--ink);border-radius:24px;box-shadow:0 5px 0 var(--ink);transition:transform .12s,box-shadow .12s}
+.role:active{transform:translateY(4px);box-shadow:0 1px 0 var(--ink)}
+.role.pink{background:var(--pink)}.role.mint{background:var(--mint)}
+.role .em{font-size:38px}
+.role b{font-family:var(--f1);font-size:20px;display:block}
+.role span.d{font-size:13px;font-weight:600}
+.loginw .card{text-align:left}
+.tabsw{display:flex;gap:8px;margin-bottom:14px}
+.tabsw button{flex:1;padding:9px;border-radius:14px;border:2px solid var(--ink);background:#fff;font-weight:800}
+.tabsw button.on{background:var(--but)}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}
+.chip{padding:5px 12px;border-radius:999px;border:2px solid var(--ink);background:#fff;font-weight:700;font-size:13px}
+
+/* shell */
+.shell{display:flex;min-height:100vh}
+.side{display:none}
+.main{flex:1;min-width:0}
+.top{display:flex;justify-content:space-between;align-items:center;padding:10px 16px;position:sticky;top:0;z-index:5;background:rgba(246,244,240,.92);backdrop-filter:blur(8px);padding-top:calc(10px + env(safe-area-inset-top))}
+.brand-mini{display:flex;align-items:center;gap:8px;font-family:var(--f1);font-weight:700;font-size:21px;letter-spacing:0}
+.top .hi{font-size:13px;color:var(--mut);font-weight:700}
+.content{padding:4px 16px 110px;max-width:980px;margin:0 auto}
+.tabbar{position:fixed;left:0;right:0;bottom:0;display:flex;background:#fff;border-top:2px solid var(--ink);padding:6px 6px calc(6px + env(safe-area-inset-bottom));z-index:10;gap:4px}
+.tabbar button{flex:1;display:flex;flex-direction:column;align-items:center;gap:0;font-size:11px;font-weight:800;color:var(--mut);padding:5px 0;border-radius:14px}
+.tabbar button.on{color:var(--ink);background:var(--pink2)}
+.tabbar .ic{font-size:20px}
+@media(min-width:860px){
+ .side{display:flex;flex-direction:column;width:250px;padding:20px 14px;border-right:2px solid var(--ink);background:#fff;position:sticky;top:0;height:100vh}
+ .logo-s{display:flex;align-items:center;gap:8px;font-family:var(--f1);font-weight:700;font-size:25px;letter-spacing:0;margin-bottom:22px}
+ .sidenav{display:flex;flex-direction:column;gap:6px;flex:1}
+ .navb{display:flex;align-items:center;gap:10px;padding:11px 14px;border-radius:16px;font-weight:800;text-align:left}
+ .navb.on{background:var(--pink2);box-shadow:inset 0 0 0 2px var(--ink)}
+ .who{display:flex;flex-direction:column;gap:6px;padding:12px;border-radius:16px;background:var(--lav2)}
+ .tabbar,.brand-mini,.top .btn{display:none}
+ .content{padding:8px 28px 40px}
+}
+
+/* hello / kartu */
+.hello{display:flex;align-items:center;gap:12px;margin-top:6px}
+.hello h2{font-size:24px}
+.kartu{position:relative;overflow:hidden;background:linear-gradient(135deg,var(--pink) 0,var(--lav) 100%);border:2.5px solid var(--ink);border-radius:24px;padding:18px;margin:14px 0;box-shadow:0 5px 0 var(--ink)}
+.kartu small{font-weight:800;opacity:.75}
+.kartu .nm{font-family:var(--f1);font-size:22px;margin:2px 0 8px}
+.kartu .mrn{font-family:var(--f1);font-size:28px;letter-spacing:2px}
+.kartu .mini{display:flex;gap:16px;flex-wrap:wrap;margin-top:8px;font-size:13px;font-weight:700}
+.kartu::after{content:"✚";position:absolute;right:-8px;top:-18px;font-size:110px;color:rgba(255,255,255,.28);font-family:var(--f1)}
+.tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:14px 0}
+.tile{display:flex;flex-direction:column;align-items:center;gap:4px;padding:14px 6px;border:2px solid var(--ink);border-radius:18px;font-weight:800;font-size:13px;background:#fff;box-shadow:0 4px 0 rgba(30,42,45,.10)}
+.tile .em{font-size:28px}
+.tile:nth-child(1){background:var(--mint2)}.tile:nth-child(2){background:var(--but2)}.tile:nth-child(3){background:var(--lav2)}
+.tip{background:var(--but2);border:2px dashed var(--ink);border-radius:18px;padding:12px 14px;margin:14px 0;font-weight:700}
+.empty{text-align:center;padding:22px 16px}
+.empty .dixa{margin:0 auto 6px}
+.empty h3{justify-content:center}
+
+/* stats */
+.stats{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin:12px 0}
+@media(min-width:700px){.stats{grid-template-columns:repeat(4,1fr)}}
+.stat{border:2px solid var(--ink);border-radius:18px;padding:12px;background:#fff}
+.stat b{font-family:var(--f1);font-size:30px;display:block;line-height:1}
+.stat span{font-size:11px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--mut)}
+.stat:nth-child(1){background:var(--lav2)}.stat:nth-child(2){background:var(--mint2)}.stat:nth-child(3){background:var(--pink2)}.stat:nth-child(4){background:var(--but2)}
+
+/* visit card */
+.visit{display:flex;gap:12px}
+.vic{font-size:32px;width:52px;height:52px;flex:none;display:grid;place-items:center;background:var(--lav2);border-radius:16px;border:2px solid var(--ink)}
+.vbody{flex:1;min-width:0}
+.vtop{display:flex;justify-content:space-between;align-items:flex-start;gap:8px}
+.acts{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}
+.poli-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(92px,1fr));gap:8px}
+.poli{display:flex;flex-direction:column;align-items:center;gap:2px;padding:10px 4px;border:2px solid var(--ink);border-radius:16px;background:#fff;font-weight:800;font-size:12px}
+.poli span{font-size:26px}
+.poli.on{background:var(--but);box-shadow:0 3px 0 var(--ink)}
+.ticket{text-align:center;background:var(--but2);border:2.5px dashed var(--ink);border-radius:22px;padding:18px;margin:12px 0}
+.ticket .no{font-family:var(--f1);font-size:54px;font-weight:700;letter-spacing:2px;color:var(--pink);text-shadow:2px 2px 0 var(--ink)}
+
+/* detail */
+.pat-head{display:flex;gap:12px;align-items:flex-start}
+.av{font-size:34px;width:54px;height:54px;border-radius:18px;background:var(--pink2);border:2px solid var(--ink);display:grid;place-items:center;flex:none}
+.alergi{background:var(--red2);border:2px solid var(--red);border-radius:14px;padding:8px 12px;font-weight:800;color:#8E4238;margin-top:10px}
+.tabs{display:flex;gap:8px;overflow-x:auto;padding:6px 2px 12px;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tabs button{white-space:nowrap;padding:8px 14px;border-radius:999px;border:2px solid var(--ink);background:#fff;font-weight:800;font-size:13px}
+.tabs button.on{background:var(--pink);box-shadow:0 3px 0 var(--ink)}
+.scroll-x{overflow-x:auto}
+.tbl{width:100%;border-collapse:collapse;font-size:13px;min-width:380px}
+.tbl th{font-family:var(--f2);font-weight:700;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--mut);padding:8px 4px;text-align:center}
+.tbl td{padding:8px 4px;text-align:center;border-top:1.5px dashed var(--line);font-weight:700}
+.tbl td.w{background:var(--red2);color:#8E4238;font-weight:800}
+.tbl td:first-child{text-align:left;font-size:12px;color:var(--mut)}
+.sparks{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.spark{width:100%;height:auto;display:block}
+.sparks .stat{padding:10px}
+.calc{display:flex;gap:8px;flex-wrap:wrap;margin:-4px 0 12px}
+.face{font-size:34px;text-align:center}
+.pes{border-left:6px solid var(--lav);padding:4px 0 4px 12px;margin:10px 0}
+.pes b{font-family:var(--f1)}
+.pes ul{margin:4px 0 0 18px}
+.kv{display:grid;grid-template-columns:130px 1fr;gap:6px 10px;font-size:14px}
+.kv dt{color:var(--mut);font-weight:700}.kv dd{margin:0;font-weight:700;word-break:break-word}
+.soap p{margin:3px 0}
+.soap b{display:inline-grid;place-items:center;width:22px;height:22px;border-radius:8px;background:var(--lav);border:2px solid var(--ink);font-size:12px;margin-right:6px}
+.soap p:nth-child(2) b{background:var(--mint)}.soap p:nth-child(3) b{background:var(--but)}.soap p:nth-child(4) b{background:var(--pink)}
+.mar{display:flex;gap:10px;align-items:center;justify-content:space-between;padding:10px 0;border-top:1.5px dashed var(--line)}
+.mar:first-of-type{border-top:0}
+.bar{height:14px;background:var(--lav2);border:2px solid var(--ink);border-radius:999px;overflow:hidden}
+.bar i{display:block;height:100%;background:var(--mint)}
+.bal{font-family:var(--f1);font-size:26px}
+.sbar p{margin:0 0 8px}
+.sbar b{display:inline-grid;place-items:center;width:26px;height:26px;border-radius:9px;background:var(--pink);border:2px solid var(--ink);margin-right:8px;font-family:var(--f1)}
+
+/* beds + patients */
+.beds{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+@media(min-width:700px){.beds{grid-template-columns:repeat(4,1fr)}}
+.bed{display:flex;flex-direction:column;gap:2px;text-align:left;border:2px dashed var(--mut);border-radius:18px;padding:12px;min-height:118px;background:#fff}
+.bed.occ{border:2px solid var(--ink);background:var(--mint2)}
+.bed.alert{background:var(--red2)}
+.bed .bn{font-family:var(--f2);font-weight:700;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--mut)}
+.bed .pn{font-weight:800;line-height:1.2}
+.plist .row{display:flex;gap:12px;align-items:center;padding:10px 0;border-top:1.5px dashed var(--line);width:100%;text-align:left}
+.plist .row:first-child{border-top:0}
+.search{margin:10px 0}
+
+/* modal + toast */
+#modal{position:fixed;inset:0;z-index:50;display:none}
+#modal.on{display:block}
+.ov{position:absolute;inset:0;background:rgba(30,42,45,.5)}
+.sheet{position:absolute;left:0;right:0;bottom:0;max-height:90vh;overflow:auto;background:var(--bg);border:2.5px solid var(--ink);border-bottom:0;border-radius:26px 26px 0 0;padding:18px 16px calc(26px + env(safe-area-inset-bottom))}
+.sheet .x{position:absolute;right:12px;top:12px}
+.sheet h3{padding-right:60px;font-size:20px}
+@media(min-width:700px){.sheet{left:50%;right:auto;bottom:auto;top:50%;transform:translate(-50%,-50%);width:580px;border-radius:26px;border-bottom:2.5px solid var(--ink);max-height:86vh}}
+pre.json{background:var(--ink);color:#DCE3E2;padding:14px;border-radius:16px;overflow:auto;font-size:12px;line-height:1.5;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;margin:10px 0;max-height:52vh}
+#toast{position:fixed;left:50%;bottom:96px;transform:translate(-50%,16px);opacity:0;background:var(--ink);color:#fff;padding:10px 18px;border-radius:999px;font-weight:700;z-index:99;transition:.25s;pointer-events:none;max-width:90vw;text-align:center}
+#toast.on{opacity:1;transform:translate(-50%,0)}
+.foot{margin-top:26px;text-align:center}
+.foot button{text-decoration:underline;color:var(--mut);font-size:12px}
+
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+ <symbol id="dixa" viewBox="0 0 120 120">
+  <ellipse cx="60" cy="112" rx="28" ry="5" fill="#1E2A2D" opacity=".12"/>
+  <path d="M60 32c-26 0-42 17-42 41 0 21 16 37 42 37s42-16 42-37c0-24-16-41-42-41z" fill="#8FB6A6" stroke="#1E2A2D" stroke-width="3"/>
+  <path d="M33 40c2-15 14-24 27-24s25 9 27 24c-8-5-17-7-27-7s-19 2-27 7z" fill="#fff" stroke="#1E2A2D" stroke-width="3" stroke-linejoin="round"/>
+  <path d="M60 19v14M53 26h14" stroke="#C07F6C" stroke-width="4.5" stroke-linecap="round"/>
+  <ellipse cx="46" cy="68" rx="4.5" ry="6" fill="#1E2A2D"/><ellipse cx="74" cy="68" rx="4.5" ry="6" fill="#1E2A2D"/>
+  <circle cx="47.6" cy="65.5" r="1.7" fill="#fff"/><circle cx="75.6" cy="65.5" r="1.7" fill="#fff"/>
+  <ellipse cx="36" cy="80" rx="6" ry="4" fill="#C98E7E" opacity=".75"/><ellipse cx="84" cy="80" rx="6" ry="4" fill="#C98E7E" opacity=".75"/>
+  <path d="M52 80q8 8 16 0" fill="none" stroke="#1E2A2D" stroke-width="3" stroke-linecap="round"/>
+ </symbol>
+</svg>
+<div id="app"></div>
+<div id="modal"></div>
+<div id="toast" role="status" aria-live="polite"></div>
+<script>
+'use strict';
+/* =========================================================
+   MEDIXA — rumah sakit mini (demo). Data fiktif, tersimpan di
+   localStorage browser. Struktur data mengikuti FHIR/SATUSEHAT
+   tapi BELUM terhubung ke SATUSEHAT.
+   ========================================================= */
+const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const pad=n=>String(n).padStart(2,'0');
+const isoDate=(d=new Date())=>`${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`;
+const hhmm=(d=new Date())=>`${pad(d.getHours())}:${pad(d.getMinutes())}`;
+const stamp=()=>`${isoDate()}T${hhmm()}`;
+const addDays=n=>{const d=new Date();d.setDate(d.getDate()+n);return isoDate(d)};
+const T=(d,h)=>addDays(d)+'T'+h;
+const parseD=s=>{const [y,m,d]=s.slice(0,10).split('-').map(Number);return new Date(y,m-1,d)};
+const fmtD=s=>s?parseD(s).toLocaleDateString('id-ID',{day:'numeric',month:'short',year:'numeric'}):'-';
+const fmtDT=t=>t?`${fmtD(t)}, ${t.slice(11,16)}`:'-';
+const age=dob=>{const b=parseD(dob),n=new Date();let a=n.getFullYear()-b.getFullYear();if(n<new Date(n.getFullYear(),b.getMonth(),b.getDate()))a--;return a};
+const daysBetween=(a,b)=>{const x=parseD(a),y=parseD(b);return Math.round((Date.UTC(y.getFullYear(),y.getMonth(),y.getDate())-Date.UTC(x.getFullYear(),x.getMonth(),x.getDate()))/864e5)};
+const uid=()=>Math.random().toString(36).slice(2,9);
+const maskNik=n=>n.slice(0,4)+'••••••••'+n.slice(-4);
+
+const NURSE='Ns. Sari Dewanti, S.Kep', NURSE_S='Ns. Sari';
+
+/* ---------- master data ---------- */
+const POLI=[
+ {id:'umum',nama:'Poli Umum',icon:'🩺',kode:'U',dokter:['dr. Andini Putri','dr. Raka Mahendra']},
+ {id:'dalam',nama:'Penyakit Dalam',icon:'🫀',kode:'D',dokter:['dr. Rina Kusuma, Sp.PD','dr. Hadi Wijaya, Sp.PD']},
+ {id:'anak',nama:'Anak',icon:'🧸',kode:'A',dokter:['dr. Nadia Safitri, Sp.A','dr. Fikri Ramadhan, Sp.A']},
+ {id:'kandungan',nama:'Kandungan',icon:'🌷',kode:'K',dokter:['dr. Maya Anggraini, Sp.OG','dr. Laras Wulandari, Sp.OG']},
+ {id:'bedah',nama:'Bedah',icon:'🩹',kode:'B',dokter:['dr. Bima Aditya, Sp.B','dr. Tomi Prasetyo, Sp.B']},
+ {id:'mata',nama:'Mata',icon:'👀',kode:'M',dokter:['dr. Sekar Ayu, Sp.M']},
+ {id:'gigi',nama:'Gigi',icon:'🦷',kode:'G',dokter:['drg. Lia Permata']}
+];
+const ALLDOC=[...new Set(POLI.flatMap(p=>p.dokter))];
+const BEDS=['M-01','M-02','M-03','M-04','W-01','W-02','W-03','W-04'].map(id=>({id,room:id[0]==='M'?'Melati':'Mawar'}));
+const ROOMS=[['Melati','Kelas 2'],['Mawar','Kelas 1']];
+const SLOTS=['08:00','08:30','09:00','09:30','10:00','10:30','11:00','11:30','13:00','13:30','14:00','14:30'];
+const MARITAL={S:'Belum Kawin',M:'Kawin',D:'Cerai Hidup',W:'Cerai Mati'};
+const TIPS=['Minum air putih 8 gelas sehari, badan senang, ginjal pun senang 💧','Cuci tangan pakai sabun 20 detik — nyanyi "Selamat Ulang Tahun" 2x 🎂','Tidur 7–8 jam ya, tubuhmu butuh recharge 🔋','Jalan kaki 30 menit itu obat murah dan manjur 👟','Sarapan dulu sebelum sibuk, biar otak nyala 🍳','Jangan tunda kontrol kalau jadwalnya sudah ada 📅'];
+
+/* SDKI → SLKI → SIKI (contoh; cek ulang kode ke buku PPNI ya) */
+const SDKI=[
+ {k:'D.0001',n:'Bersihan Jalan Napas Tidak Efektif',slki:['L.01001','Bersihan Jalan Napas'],siki:[['I.01011','Manajemen Jalan Napas'],['I.01006','Latihan Batuk Efektif'],['I.01014','Pemantauan Respirasi']]},
+ {k:'D.0005',n:'Pola Napas Tidak Efektif',slki:['L.01004','Pola Napas'],siki:[['I.01011','Manajemen Jalan Napas'],['I.01014','Pemantauan Respirasi'],['I.01026','Terapi Oksigen']]},
+ {k:'D.0009',n:'Perfusi Perifer Tidak Efektif',slki:['L.02011','Perfusi Perifer'],siki:[['I.02079','Perawatan Sirkulasi'],['I.02060','Pemantauan Tanda Vital']]},
+ {k:'D.0019',n:'Defisit Nutrisi',slki:['L.03030','Status Nutrisi'],siki:[['I.03119','Manajemen Nutrisi'],['I.12383','Edukasi Kesehatan']]},
+ {k:'D.0023',n:'Hipovolemia',slki:['L.03028','Status Cairan'],siki:[['I.03116','Manajemen Hipovolemia'],['I.03121','Pemantauan Cairan']]},
+ {k:'D.0054',n:'Gangguan Mobilitas Fisik',slki:['L.05042','Mobilitas Fisik'],siki:[['I.05173','Dukungan Mobilisasi'],['I.06171','Dukungan Ambulasi']]},
+ {k:'D.0055',n:'Gangguan Pola Tidur',slki:['L.05045','Pola Tidur'],siki:[['I.05174','Dukungan Tidur']]},
+ {k:'D.0056',n:'Intoleransi Aktivitas',slki:['L.05047','Toleransi Aktivitas'],siki:[['I.05178','Manajemen Energi'],['I.05173','Dukungan Mobilisasi']]},
+ {k:'D.0077',n:'Nyeri Akut',slki:['L.08066','Tingkat Nyeri'],siki:[['I.08238','Manajemen Nyeri'],['I.08243','Pemberian Analgesik'],['I.09326','Terapi Relaksasi']]},
+ {k:'D.0080',n:'Ansietas',slki:['L.09093','Tingkat Ansietas'],siki:[['I.09314','Reduksi Ansietas'],['I.09326','Terapi Relaksasi']]},
+ {k:'D.0111',n:'Defisit Pengetahuan',slki:['L.12111','Tingkat Pengetahuan'],siki:[['I.12383','Edukasi Kesehatan']]},
+ {k:'D.0129',n:'Gangguan Integritas Kulit/Jaringan',slki:['L.14125','Integritas Kulit dan Jaringan'],siki:[['I.14564','Perawatan Luka'],['I.11353','Perawatan Integritas Kulit']]},
+ {k:'D.0130',n:'Hipertermia',slki:['L.14134','Termoregulasi'],siki:[['I.15506','Manajemen Hipertermia'],['I.14578','Regulasi Temperatur'],['I.02060','Pemantauan Tanda Vital']]},
+ {k:'D.0142',n:'Risiko Infeksi',risk:true,slki:['L.14137','Tingkat Infeksi'],siki:[['I.14539','Pencegahan Infeksi'],['I.14564','Perawatan Luka']]},
+ {k:'D.0143',n:'Risiko Jatuh',risk:true,slki:['L.14138','Tingkat Jatuh'],siki:[['I.14540','Pencegahan Jatuh'],['I.14513','Manajemen Keselamatan Lingkungan']]}
+];
+const MORSE=[
+ ['jatuh','Riwayat jatuh (3 bulan terakhir)',[['Tidak',0],['Ya',25]]],
+ ['sekunder','Diagnosis sekunder (lebih dari 1)',[['Tidak',0],['Ya',15]]],
+ ['alat','Alat bantu jalan',[['Tidak ada / bed rest / dibantu perawat',0],['Kruk / tongkat / walker',15],['Berpegangan pada furnitur',30]]],
+ ['infus','Terpasang infus / heparin lock',[['Tidak',0],['Ya',20]]],
+ ['gaya','Cara berjalan',[['Normal / bed rest / imobilisasi',0],['Lemah',10],['Terganggu',20]]],
+ ['mental','Status mental',[['Sadar akan kemampuan diri',0],['Lupa keterbatasan diri',15]]]
+];
+const GCS={
+ e:['Mata (E)',[[4,'Spontan'],[3,'Terhadap suara'],[2,'Terhadap nyeri'],[1,'Tidak ada']]],
+ m:['Motorik (M)',[[6,'Mengikuti perintah'],[5,'Melokalisir nyeri'],[4,'Menarik diri'],[3,'Fleksi abnormal'],[2,'Ekstensi abnormal'],[1,'Tidak ada']]],
+ v:['Verbal (V)',[[5,'Orientasi baik'],[4,'Bingung'],[3,'Kata tidak tepat'],[2,'Suara tak jelas'],[1,'Tidak ada']]]
+};
+const FACES=['😊','🙂','🙂','😐','😐','😟','😟','😣','😣','😭','😭'];
+const DISCH=['Edukasi obat pulang','Edukasi diet','Edukasi tanda bahaya','Jadwal kontrol dijelaskan','Resume medis & surat kontrol diserahkan','Infus / akses medis dilepas'];
+const RANGE={sis:[90,140],dia:[60,90],nadi:[60,100],rr:[12,20],suhu:[36,37.5],spo2:[95,101]};
+const isWarn=(k,v)=>v!==''&&v!=null&&(v<RANGE[k][0]||v>RANGE[k][1]);
+const ttvWarn=t=>!!t&&Object.keys(RANGE).some(k=>isWarn(k,t[k]));
+
+/* ---------- seed data ---------- */
+function E(o){return Object.assign({pengkajian:null,ttv:[],askep:[],cppt:[],mar:[],io:[],bed:null,admitAt:null,dischargeAt:null,discharge:{}},o)}
+function seed(){
+ const patients=[
+  {id:'p1',mrn:'000001',nik:'3273015203850001',nama:'Siti Aminah',jk:'P',tempat:'Bandung',lahir:'1985-03-12',marital:'M',hp:'081234567801',alamat:'Jl. Melati No. 12',rtrw:'03/05',kel:'Cihapit',kec:'Bandung Wetan',kota:'Kota Bandung',prov:'Jawa Barat',pos:'40114',kerja:'Guru',penjamin:'BPJS',kontak:{nama:'Rahmat',hub:'Suami',hp:'081234567802'},pin:'123456'},
+  {id:'p2',mrn:'000002',nik:'3273012107720002',nama:'Budi Santoso',jk:'L',tempat:'Cimahi',lahir:'1972-07-21',marital:'M',hp:'081234567803',alamat:'Jl. Kenanga No. 7',rtrw:'01/02',kel:'Citeureup',kec:'Cimahi Utara',kota:'Kota Cimahi',prov:'Jawa Barat',pos:'40512',kerja:'Wiraswasta',penjamin:'BPJS',kontak:{nama:'Wati',hub:'Istri',hp:'081234567804'},pin:'123456'},
+  {id:'p3',mrn:'000003',nik:'3273014511980003',nama:'Dewi Lestari',jk:'P',tempat:'Bandung',lahir:'1998-11-05',marital:'M',hp:'081234567805',alamat:'Jl. Anggrek No. 3',rtrw:'05/01',kel:'Dago',kec:'Coblong',kota:'Kota Bandung',prov:'Jawa Barat',pos:'40135',kerja:'Karyawan swasta',penjamin:'Umum',kontak:{nama:'Anton',hub:'Suami',hp:'081234567806'},pin:'123456'},
+  {id:'p4',mrn:'000004',nik:'3273013001010004',nama:'Agus Pratama',jk:'L',tempat:'Bandung',lahir:'2001-01-30',marital:'S',hp:'081234567807',alamat:'Jl. Mawar No. 21',rtrw:'02/04',kel:'Sukajadi',kec:'Sukajadi',kota:'Kota Bandung',prov:'Jawa Barat',pos:'40162',kerja:'Mahasiswa',penjamin:'BPJS',kontak:{nama:'Ibu Tuti',hub:'Ibu',hp:'081234567808'},pin:'123456'}
+ ];
+ const by=NURSE_S;
+ const encounters=[
+  E({id:'e1',patientId:'p1',cls:'AMB',poli:'dalam',dokter:'dr. Rina Kusuma, Sp.PD',tanggal:addDays(0),jam:'09:00',keluhan:'Pusing dan tengkuk pegal sejak 3 hari',status:'arrived',antrean:'D-001'}),
+  E({id:'e2',patientId:'p3',cls:'AMB',poli:'kandungan',dokter:'dr. Maya Anggraini, Sp.OG',tanggal:addDays(0),jam:'10:30',keluhan:'Kontrol rutin kehamilan',status:'planned',antrean:'K-001'}),
+  E({id:'e5',patientId:'p1',cls:'AMB',poli:'umum',dokter:'dr. Andini Putri',tanggal:addDays(-14),jam:'09:30',keluhan:'Batuk pilek 4 hari',status:'finished',antrean:'U-002',
+   pengkajian:{t:T(-14,'09:40'),by,bb:58,tb:160,alergi:'',nyeri:1,lokasiNyeri:'Tenggorokan',gcs:{e:4,m:6,v:5},morse:{jatuh:0,sekunder:0,alat:0,infus:0,gaya:0,mental:0},catatan:''},
+   ttv:[{t:T(-14,'09:40'),sis:120,dia:80,nadi:82,rr:18,suhu:37.2,spo2:98,by}]}),
+  E({id:'e3',patientId:'p2',cls:'IMP',poli:'dalam',dokter:'dr. Rina Kusuma, Sp.PD',tanggal:addDays(-2),jam:'08:00',keluhan:'Sesak napas dan demam 3 hari, batuk berdahak',status:'in-progress',bed:'M-02',admitAt:T(-2,'08:00'),
+   pengkajian:{t:T(-2,'08:30'),by,bb:62,tb:165,alergi:'Udang (ruam)',nyeri:2,lokasiNyeri:'Dada saat batuk',gcs:{e:4,m:6,v:5},morse:{jatuh:0,sekunder:15,alat:0,infus:20,gaya:0,mental:0},catatan:'Pasien tampak lemah, terpasang O₂ nasal kanul 3 lpm.'},
+   ttv:[{t:T(-2,'08:30'),sis:150,dia:95,nadi:104,rr:26,suhu:38.6,spo2:92,by},{t:T(-1,'08:00'),sis:140,dia:90,nadi:98,rr:24,suhu:38.1,spo2:94,by},{t:T(-1,'20:00'),sis:135,dia:88,nadi:95,rr:23,suhu:37.9,spo2:95,by},{t:T(0,'06:00'),sis:130,dia:85,nadi:92,rr:22,suhu:37.8,spo2:95,by}],
+   askep:[{id:'a1',sdki:{k:'D.0005',n:'Pola Napas Tidak Efektif'},risk:false,etiologi:'hambatan upaya napas',gejala:'dispnea, RR 26x/menit, SpO₂ 92%',slki:{k:'L.01004',n:'Pola Napas'},target:'Setelah dilakukan intervensi keperawatan 3x24 jam, pola napas membaik (RR 16–20x/menit, SpO₂ ≥95%)',siki:[{k:'I.01011',n:'Manajemen Jalan Napas'},{k:'I.01014',n:'Pemantauan Respirasi'},{k:'I.01026',n:'Terapi Oksigen'}],t:T(-2,'09:00'),by}],
+   cppt:[{id:'c1',t:T(-1,'14:00'),by,s:'Pasien mengatakan sesak mulai berkurang',o:'RR 24x/menit, SpO₂ 94% dengan O₂ 3 lpm, suhu 38.1°C',a:'Pola napas tidak efektif teratasi sebagian',p:'Lanjutkan intervensi, pantau TTV tiap 4 jam'},{id:'c2',t:T(0,'06:30'),by,s:'Pasien mengatakan masih batuk tapi lebih lega',o:'RR 22x/menit, SpO₂ 95%, suhu 37.8°C, dahak kental putih',a:'Pola napas membaik, masih ada demam ringan',p:'Lanjutkan terapi O₂ dan antibiotik, anjurkan minum hangat'}],
+   mar:[{id:'m1',obat:'Ceftriaxone',dosis:'1 g',rute:'IV',jam:'06:00',given:true,givenAt:T(0,'06:05'),by},{id:'m2',obat:'Omeprazole',dosis:'40 mg',rute:'IV',jam:'07:00',given:true,givenAt:T(0,'07:10'),by},{id:'m3',obat:'Nebulisasi Combivent',dosis:'1 vial',rute:'Inhalasi',jam:'10:00',given:false},{id:'m4',obat:'Paracetamol',dosis:'1 g',rute:'IV',jam:'12:00',given:false},{id:'m5',obat:'Ceftriaxone',dosis:'1 g',rute:'IV',jam:'18:00',given:false}],
+   io:[{id:'i1',t:T(0,'06:00'),type:'in',label:'Infus RL',ml:500},{id:'i2',t:T(0,'07:00'),type:'in',label:'Minum',ml:300},{id:'i3',t:T(0,'09:00'),type:'out',label:'Urine',ml:450}]}),
+  E({id:'e4',patientId:'p4',cls:'IMP',poli:'bedah',dokter:'dr. Bima Aditya, Sp.B',tanggal:addDays(-1),jam:'10:00',keluhan:'Post apendektomi hari ke-1, nyeri luka operasi',status:'in-progress',bed:'W-01',admitAt:T(-1,'10:00'),
+   pengkajian:{t:T(-1,'10:30'),by,bb:60,tb:170,alergi:'',nyeri:5,lokasiNyeri:'Perut kanan bawah (luka operasi)',gcs:{e:4,m:6,v:5},morse:{jatuh:0,sekunder:0,alat:0,infus:20,gaya:10,mental:0},catatan:'Luka operasi tertutup verband, tidak ada rembesan.'},
+   ttv:[{t:T(-1,'10:30'),sis:120,dia:80,nadi:88,rr:20,suhu:37.2,spo2:98,by},{t:T(0,'06:00'),sis:118,dia:76,nadi:84,rr:18,suhu:36.9,spo2:99,by}],
+   askep:[{id:'a2',sdki:{k:'D.0077',n:'Nyeri Akut'},risk:false,etiologi:'agen pencedera fisik (prosedur operasi)',gejala:'mengeluh nyeri, skala 5/10, meringis',slki:{k:'L.08066',n:'Tingkat Nyeri'},target:'Setelah dilakukan intervensi keperawatan 3x24 jam, tingkat nyeri menurun (skala ≤3)',siki:[{k:'I.08238',n:'Manajemen Nyeri'},{k:'I.08243',n:'Pemberian Analgesik'}],t:T(-1,'11:00'),by}],
+   cppt:[{id:'c3',t:T(0,'07:00'),by,s:'Pasien mengatakan nyeri luka berkurang setelah obat',o:'Skala nyeri 4/10, luka kering, TTV stabil',a:'Nyeri akut menurun',p:'Lanjutkan manajemen nyeri, mobilisasi bertahap'}],
+   mar:[{id:'m6',obat:'Ketorolac',dosis:'30 mg',rute:'IV',jam:'08:00',given:true,givenAt:T(0,'08:05'),by},{id:'m7',obat:'Ceftriaxone',dosis:'1 g',rute:'IV',jam:'08:00',given:true,givenAt:T(0,'08:10'),by},{id:'m8',obat:'Ketorolac',dosis:'30 mg',rute:'IV',jam:'16:00',given:false},{id:'m9',obat:'Ceftriaxone',dosis:'1 g',rute:'IV',jam:'20:00',given:false}],
+   io:[{id:'i4',t:T(0,'06:00'),type:'in',label:'Infus RL',ml:500},{id:'i5',t:T(0,'08:00'),type:'in',label:'Minum',ml:200},{id:'i6',t:T(0,'09:30'),type:'out',label:'Urine',ml:300}]})
+ ];
+ return {v:1,patients,encounters,session:null};
+}
+
+/* ---------- state ---------- */
+const KEY='medixa_demo_v1';
+function load(){try{const r=localStorage.getItem(KEY);if(r){const d=JSON.parse(r);if(d&&d.patients)return d}}catch(e){}return seed()}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
+let S=load();
+const UI={screen:'landing',role:null,loginMode:'in',tab:'home',enc:null,encTab:'ttv'};
+if(S.session){UI.screen='app'}
+
+const pat=id=>S.patients.find(p=>p.id===id);
+const enc=id=>S.encounters.find(e=>e.id===id);
+const curP=()=>pat(S.session.pid);
+const encsOf=pid=>S.encounters.filter(e=>e.patientId===pid);
+const byNewest=(a,b)=>(b.tanggal+b.jam).localeCompare(a.tanggal+a.jam);
+const activeIMP=pid=>S.encounters.find(e=>e.patientId===pid&&e.cls==='IMP'&&e.status==='in-progress');
+const bedOcc=id=>S.encounters.find(e=>e.cls==='IMP'&&e.status==='in-progress'&&e.bed===id);
+const newEnc=o=>E(Object.assign({id:'e'+uid()},o));
+const today=()=>isoDate();
+const hasAlergi=e=>{const a=(e.pengkajian&&e.pengkajian.alergi||'').trim();return a&&a!=='-'?a:''};
+const lastTTV=e=>e.ttv.length?e.ttv[e.ttv.length-1]:null;
+const ioToday=e=>e.io.filter(x=>x.t.slice(0,10)===today());
+const ioSum=e=>{const l=ioToday(e);const i=l.filter(x=>x.type==='in').reduce((a,b)=>a+b.ml,0),o=l.filter(x=>x.type==='out').reduce((a,b)=>a+b.ml,0);return{in:i,out:o,bal:i-o}};
+const overdue=m=>!m.given&&m.jam<hhmm();
+const stBadge=e=>{
+ if(e.status==='in-progress')return e.cls==='IMP'?['Dirawat','mint']:['Sedang dilayani','mint'];
+ return({planned:['Terdaftar','lav'],arrived:['Sudah check-in','butter'],finished:['Selesai','ok'],cancelled:['Dibatalkan','pink']})[e.status]||[e.status,'lav'];
+};
+const gcsLabel=t=>t>=14?'Compos mentis':t>=12?'Apatis':t>=10?'Delirium':t>=7?'Somnolen':t>=4?'Stupor':'Koma';
+const morseLabel=t=>t>=51?['Risiko tinggi','red']:t>=25?['Risiko rendah','but']:['Tidak berisiko','mint'];
+const nyeriLabel=v=>v===0?'Tidak nyeri':v<=3?'Nyeri ringan':v<=6?'Nyeri sedang':'Nyeri berat';
+const bmiInfo=(bb,tb)=>{if(!bb||!tb)return null;const b=bb/Math.pow(tb/100,2);return{v:b.toFixed(1),l:b<18.5?'Kurus':b<25?'Normal':b<30?'Berat badan lebih':'Obesitas'}};
+const morseTotal=m=>m?Object.values(m).reduce((a,b)=>a+(+b||0),0):0;
+const gcsTotal=g=>g?(+g.e||0)+(+g.m||0)+(+g.v||0):0;
+const dixa=c=>`<svg class="dixa ${c||''}" viewBox="0 0 120 120" aria-hidden="true"><use href="#dixa"/></svg>`;
+
+/* =========================================================
+   VIEWS — umum
+   ========================================================= */
+function empty(title,sub,tab,btn){
+ return `<div class="card empty">${dixa('md')}<h3>${title}</h3><p class="mut">${sub||''}</p>${tab?`<button class="btn pink sm" data-act="nav" data-tab="${tab}" style="margin-top:10px">${btn}</button>`:''}</div>`;
+}
+function greet(){const h=new Date().getHours();return h<11?'pagi':h<15?'siang':h<18?'sore':'malam'}
+
+function viewLanding(){
+ return `<div class="landing">
+  ${dixa('big')}
+  <h1 class="logo">MEDIXA</h1>
+  <p class="tagline">Rumah sakit mini yang ramah dan menggemaskan</p>
+  <h2>Masuk sebagai siapa hari ini?</h2>
+  <div class="roles">
+   <button class="role pink" data-act="pickRole" data-role="patient"><span class="em">🧸</span><span><b>Pasien</b><span class="d">Daftar, booking poli, cek riwayat</span></span></button>
+   <button class="role mint" data-act="pickRole" data-role="nurse"><span class="em">💉</span><span><b>Perawat</b><span class="d">Pengkajian, askep, CPPT, obat</span></span></button>
+  </div>
+  <p class="tiny" style="margin-top:26px">Versi demo dengan data fiktif yang tersimpan di browser kamu.</p>
+  <div class="foot"><button data-act="resetDemo">Reset data demo</button></div>
+ </div>`;
+}
+
+function regForm(mode){
+ const self=mode==='self';
+ return `<form class="form" data-submit="register" data-mode="${mode}" data-live="reg" autocomplete="off">
+  <fieldset><legend>🪪 Identitas</legend>
+   <div class="field"><label>NIK <small id="nikc">0/16</small></label><input name="nik" inputmode="numeric" maxlength="16" placeholder="16 digit sesuai KTP" required></div>
+   <div class="hint" id="nikhint"></div>
+   <div class="field"><label>Nama lengkap (sesuai KTP)</label><input name="nama" required></div>
+   <div class="field"><label>Jenis kelamin</label><div class="seg"><label><input type="radio" name="jk" value="P" checked><span>👩 Perempuan</span></label><label><input type="radio" name="jk" value="L"><span>👨 Laki-laki</span></label></div></div>
+   <div class="row2"><div class="field"><label>Tempat lahir</label><input name="tempat" required></div><div class="field"><label>Tanggal lahir</label><input name="lahir" type="date" max="${isoDate()}" required></div></div>
+   <div class="row2"><div class="field"><label>Status pernikahan</label><select name="marital">${Object.entries(MARITAL).map(([k,v])=>`<option value="${k}">${v}</option>`).join('')}</select></div><div class="field"><label>Pekerjaan</label><input name="kerja"></div></div>
+   <div class="field"><label>No. HP</label><input name="hp" type="tel" inputmode="tel" placeholder="08xxxxxxxxxx" required></div>
+  </fieldset>
+  <fieldset><legend>🏡 Alamat</legend>
+   <div class="field"><label>Alamat lengkap</label><input name="alamat" placeholder="Jalan, nomor rumah" required></div>
+   <div class="row2"><div class="field"><label>RT/RW</label><input name="rtrw" placeholder="03/05"></div><div class="field"><label>Kode pos</label><input name="pos" inputmode="numeric" maxlength="5"></div></div>
+   <div class="row2"><div class="field"><label>Kelurahan</label><input name="kel" required></div><div class="field"><label>Kecamatan</label><input name="kec" required></div></div>
+   <div class="row2"><div class="field"><label>Kota/Kabupaten</label><input name="kota" required></div><div class="field"><label>Provinsi</label><input name="prov" value="Jawa Barat" required></div></div>
+  </fieldset>
+  <fieldset><legend>💳 Penjamin & kontak darurat</legend>
+   <div class="field"><label>Penjamin</label><select name="penjamin"><option>BPJS</option><option>Umum</option><option>Asuransi swasta</option></select></div>
+   <div class="row2"><div class="field"><label>Nama kontak darurat</label><input name="k_nama" required></div><div class="field"><label>Hubungan</label><input name="k_hub" placeholder="Suami, Ibu, ..." required></div></div>
+   <div class="field"><label>HP kontak darurat</label><input name="k_hp" type="tel" inputmode="tel" required></div>
+  </fieldset>
+  ${self?`<div class="field"><label>PIN untuk login <small>6 digit angka</small></label><input name="pin" type="password" inputmode="numeric" maxlength="6" pattern="\\d{6}" required></div>`:`<p class="hint">PIN awal pasien: 123456 (bisa dikasih tahu ke pasien).</p>`}
+  <button class="btn pink block">${self?'Daftar & masuk':'Simpan registrasi'} 🎉</button>
+ </form>`;
+}
+
+function viewLogin(){
+ const nurse=UI.role==='nurse';
+ let body='';
+ if(nurse){
+  body=`<form class="form" data-submit="loginNurse">
+   <div class="field"><label>Username</label><input name="u" autocomplete="username" required></div>
+   <div class="field"><label>Password</label><input name="p" type="password" autocomplete="current-password" required></div>
+   <button class="btn mint block">Masuk</button></form>
+   <div class="chips"><span class="tiny">Akun demo:</span><button type="button" class="chip" data-act="fillNurse">perawat / medixa123</button></div>`;
+ } else if(UI.loginMode==='reg'){
+  body=regForm('self');
+ } else {
+  body=`<form class="form" data-submit="loginPatient">
+   <div class="field"><label>NIK</label><input name="nik" inputmode="numeric" maxlength="16" required></div>
+   <div class="field"><label>PIN</label><input name="pin" type="password" inputmode="numeric" maxlength="6" required></div>
+   <button class="btn pink block">Masuk</button></form>
+   <div class="chips"><span class="tiny">Coba akun demo:</span>${S.patients.slice(0,4).map(p=>`<button type="button" class="chip" data-act="fillDemo" data-nik="${p.nik}" data-pin="${p.pin}">${esc(p.nama.split(' ')[0])}</button>`).join('')}</div>`;
+ }
+ return `<div class="loginw">
+  <button class="btn ghost sm" data-act="backLanding" style="float:left">← Ganti peran</button><div style="clear:both"></div>
+  ${dixa('md')}
+  <h2>${nurse?'Masuk sebagai Perawat 💉':'Masuk sebagai Pasien 🧸'}</h2>
+  ${nurse?'':`<div class="tabsw" style="margin-top:14px"><button class="${UI.loginMode==='in'?'on':''}" data-act="loginMode" data-m="in">Masuk</button><button class="${UI.loginMode==='reg'?'on':''}" data-act="loginMode" data-m="reg">Daftar baru</button></div>`}
+  <div class="card" style="margin-top:14px">${body}</div>
+ </div>`;
+}
+
+const NAV={
+ patient:[['home','🏠','Beranda'],['rj','🩺','Rawat Jalan'],['ri','🛏️','Rawat Inap'],['hist','📒','Riwayat'],['prof','🪪','Profil']],
+ nurse:[['home','🏠','Beranda'],['rj','🩺','Antrean RJ'],['ri','🛏️','Rawat Inap'],['pas','🧸','Pasien']]
+};
+function shell(){
+ const role=S.session.role,nav=NAV[role];
+ const who=role==='nurse'?NURSE:curP().nama;
+ const on=k=>UI.tab===k&&!UI.enc?'on':'';
+ return `<div class="shell">
+  <aside class="side"><div class="logo-s">${dixa('sm')}<span>MEDIXA</span></div>
+   <div class="sidenav">${nav.map(([k,ic,l])=>`<button class="navb ${on(k)}" data-act="nav" data-tab="${k}"><span>${ic}</span>${l}</button>`).join('')}</div>
+   <div class="who"><small class="mut">${role==='nurse'?'Perawat':'Pasien'}</small><b>${esc(who)}</b><button class="btn ghost sm" data-act="logout">Keluar</button></div>
+  </aside>
+  <main class="main">
+   <header class="top"><div class="brand-mini">${dixa('sm')}MEDIXA</div><span class="hi">${role==='nurse'?esc(NURSE_S):esc(who.split(' ')[0])}</span><button class="btn ghost sm" data-act="logout">Keluar</button></header>
+   <div class="content">${viewBody()}</div>
+  </main>
+  <nav class="tabbar">${nav.map(([k,ic,l])=>`<button class="${on(k)}" data-act="nav" data-tab="${k}"><span class="ic">${ic}</span><span>${l}</span></button>`).join('')}</nav>
+ </div>`;
+}
+function viewBody(){
+ if(S.session.role==='patient')return({home:pHome,rj:pRJ,ri:pRI,hist:pHist,prof:pProf}[UI.tab]||pHome)();
+ if(UI.enc&&enc(UI.enc))return nEnc();
+ return({home:nHome,rj:nRJ,ri:nRI,pas:nPas}[UI.tab]||nHome)();
+}
+
+function visitCard(e,role){
+ const p=pat(e.patientId),po=POLI.find(x=>x.id===e.poli)||{icon:'🩺',nama:'Poli'};
+ const [lbl,c]=stBadge(e);
+ let acts='';
+ if(role==='patient'){
+  acts=`<button class="btn ghost sm" data-act="visit" data-id="${e.id}">Detail</button>`+(e.status==='planned'?`<button class="btn red sm" data-act="cancelVisit" data-id="${e.id}">Batalkan</button>`:'');
+ } else if(e.status==='planned'){acts=`<button class="btn mint sm" data-act="checkin" data-id="${e.id}">Check-in ✔️</button>`}
+ else if(e.status==='arrived'){acts=`<button class="btn pink sm" data-act="startKaji" data-id="${e.id}">Mulai pengkajian 📝</button>`}
+ else if(e.status!=='cancelled'){acts=`<button class="btn ghost sm" data-act="openEnc" data-id="${e.id}">Buka</button>`}
+ return `<div class="card visit"><div class="vic">${po.icon}</div><div class="vbody">
+  <div class="vtop"><b>${role==='nurse'?esc(p.nama):esc(po.nama)}</b><span class="badge ${c}">${lbl}</span></div>
+  <div class="mut sm">${role==='nurse'?esc(po.nama)+' · ':''}${esc(e.dokter)}</div>
+  <div class="mut sm">📅 ${fmtD(e.tanggal)}, ${e.jam}${e.antrean?` · 🎟️ <b>${e.antrean}</b>`:''}</div>
+  <div class="sm" style="margin-top:4px">“${esc(e.keluhan)}”</div>
+  ${acts?`<div class="acts">${acts}</div>`:''}
+ </div></div>`;
+}
+
+/* =========================================================
+   VIEWS — pasien
+   ========================================================= */
+function pHome(){
+ const p=curP(),es=encsOf(p.id),ri=activeIMP(p.id);
+ const nxt=es.filter(e=>e.cls==='AMB'&&['planned','arrived','in-progress'].includes(e.status)&&e.tanggal>=today()).sort((a,b)=>-byNewest(a,b))[0];
+ const tip=TIPS[new Date().getDate()%TIPS.length];
+ return `<section class="hello">${dixa('md')}<div><h2>Halo, ${esc(p.nama.split(' ')[0])}! 👋</h2><p class="mut">Selamat ${greet()}, semoga harimu sehat dan ceria.</p></div></section>
+ <div class="kartu"><small>KARTU BEROBAT</small><div class="nm">${esc(p.nama)}</div><div class="mrn">${p.mrn}</div>
+  <div class="mini"><span>NIK ${maskNik(p.nik)}</span><span>Lahir ${fmtD(p.lahir)}</span><span>${esc(p.penjamin)}</span></div></div>
+ ${ri?`<div class="card mint clickable" data-act="nav" data-tab="ri"><h3>🛏️ Kamu sedang dirawat</h3><p class="sm">Bed ${ri.bed} · DPJP ${esc(ri.dokter)}. Ketuk untuk lihat detail.</p></div>`:''}
+ <div class="tiles">
+  <button class="tile" data-act="nav" data-tab="rj"><span class="em">🩺</span>Daftar rawat jalan</button>
+  <button class="tile" data-act="nav" data-tab="ri"><span class="em">🛏️</span>Rawat inap</button>
+  <button class="tile" data-act="nav" data-tab="hist"><span class="em">📒</span>Riwayat</button>
+ </div>
+ <h3 class="sec">Kunjungan berikutnya</h3>
+ ${nxt?visitCard(nxt,'patient'):empty('Belum ada jadwal kunjungan','Yuk daftar rawat jalan dulu.','rj','Daftar sekarang')}
+ <div class="tip">💡 ${tip}</div>`;
+}
+
+function visitForm(pid){
+ return `<form class="form" data-submit="rjSubmit" data-pid="${pid}">
+  <div class="field"><label>Pilih poli</label><div class="poli-grid">${POLI.map(x=>`<button type="button" class="poli" data-act="rjPoli" data-id="${x.id}"><span>${x.icon}</span>${esc(x.nama.replace('Poli ',''))}</button>`).join('')}</div><input type="hidden" name="poli"></div>
+  <div class="field"><label>Dokter</label><select name="dokter" required disabled><option value="">Pilih poli dulu</option></select></div>
+  <div class="row2"><div class="field"><label>Tanggal</label><input type="date" name="tanggal" min="${today()}" value="${today()}" required></div><div class="field"><label>Jam</label><select name="jam">${SLOTS.map(s=>`<option>${s}</option>`).join('')}</select></div></div>
+  <div class="field"><label>Keluhan</label><textarea name="keluhan" rows="3" placeholder="Ceritakan keluhan utamanya" required></textarea></div>
+  <button class="btn pink block">Daftar kunjungan 🎟️</button></form>`;
+}
+function pRJ(){
+ const p=curP(),list=encsOf(p.id).filter(e=>e.cls==='AMB').sort(byNewest);
+ return `<h2 class="ttl">🩺 Rawat Jalan</h2><p class="mut">Pilih poli, dokter, dan jam kunjunganmu.</p>
+ <div class="card"><h3>Daftar kunjungan baru</h3>${visitForm(p.id)}</div>
+ <h3 class="sec">Kunjunganmu</h3>${list.length?list.map(e=>visitCard(e,'patient')).join(''):empty('Belum ada kunjungan','Kunjungan yang kamu daftarkan akan muncul di sini.')}`;
+}
+function tile(l,v,warn){return `<div class="stat" style="${warn?'background:var(--red2)':''}"><b style="font-size:22px">${v}</b><span>${l}</span></div>`}
+function pRI(){
+ const p=curP(),e=activeIMP(p.id);
+ if(!e)return `<h2 class="ttl">🛏️ Rawat Inap</h2>`+empty('Kamu tidak sedang dirawat inap','Kalau nanti dirawat, info kamar dan jadwal obatmu muncul di sini.');
+ const t=lastTTV(e),bd=BEDS.find(b=>b.id===e.bed),given=e.mar.filter(m=>m.given).length,tot=e.mar.length,io=ioSum(e);
+ const hari=daysBetween(e.admitAt,today())+1;
+ return `<h2 class="ttl">🛏️ Rawat Inap</h2>
+ <div class="card mint"><h3>Ruang ${bd?bd.room:''} · Bed ${e.bed}</h3><dl class="kv"><dt>DPJP</dt><dd>${esc(e.dokter)}</dd><dt>Masuk</dt><dd>${fmtDT(e.admitAt)}</dd><dt>Hari rawat</dt><dd>ke-${hari}</dd><dt>Keluhan</dt><dd>${esc(e.keluhan)}</dd></dl></div>
+ ${t?`<h3 class="sec">Kondisi terakhir <span class="tiny">(${fmtDT(t.t)})</span></h3><div class="stats" style="grid-template-columns:repeat(3,1fr)">${tile('Tensi',t.sis+'/'+t.dia)}${tile('Nadi',t.nadi)}${tile('Napas',t.rr)}${tile('Suhu',t.suhu+'°C')}${tile('SpO₂',t.spo2+'%')}</div>`:''}
+ <div class="card"><h3>💊 Obat hari ini</h3><div class="bar"><i style="width:${tot?given/tot*100:0}%"></i></div><p class="sm mut" style="margin-top:6px">${given} dari ${tot} jadwal sudah diberikan perawat.</p></div>
+ <div class="card"><h3>💧 Cairan hari ini</h3><p class="sm">Masuk ${io.in} ml · Keluar ${io.out} ml</p></div>
+ <div class="tip">💡 Kalau ada keluhan, tekan bel di sisi tempat tidur ya. Perawat siap membantu.</div>`;
+}
+function pHist(){
+ const p=curP(),list=encsOf(p.id).sort(byNewest);
+ return `<h2 class="ttl">📒 Riwayat</h2><p class="mut">Semua kunjungan rawat jalan dan rawat inap.</p>${list.length?list.map(e=>{
+  const po=POLI.find(x=>x.id===e.poli)||{icon:'🩺',nama:''},[l,c]=stBadge(e);
+  return `<div class="card clickable" data-act="visit" data-id="${e.id}"><div class="vtop"><b>${e.cls==='IMP'?'🛏️ Rawat Inap':po.icon+' Rawat Jalan'} · ${esc(po.nama)}</b><span class="badge ${c}">${l}</span></div><div class="mut sm">📅 ${fmtD(e.tanggal)} · ${esc(e.dokter)}</div><div class="sm">“${esc(e.keluhan)}”</div></div>`}).join(''):empty('Riwayat masih kosong','Kunjunganmu akan tercatat di sini.')}`;
+}
+function pProf(){
+ const p=curP();
+ return `<h2 class="ttl">🪪 Profil</h2>
+ <div class="card"><div class="pat-head"><div class="av">${p.jk==='L'?'👦':'👧'}</div><div><h3 style="margin:0">${esc(p.nama)}</h3><div class="mut sm">No. RM ${p.mrn} · ${age(p.lahir)} tahun</div></div></div>
+ <dl class="kv" style="margin-top:14px">
+  <dt>NIK</dt><dd>${p.nik}</dd><dt>Tempat, tgl lahir</dt><dd>${esc(p.tempat)}, ${fmtD(p.lahir)}</dd><dt>Jenis kelamin</dt><dd>${p.jk==='L'?'Laki-laki':'Perempuan'}</dd>
+  <dt>Status nikah</dt><dd>${MARITAL[p.marital]||'-'}</dd><dt>Pekerjaan</dt><dd>${esc(p.kerja)||'-'}</dd><dt>No. HP</dt><dd>${esc(p.hp)}</dd>
+  <dt>Alamat</dt><dd>${esc(p.alamat)}${p.rtrw?', RT/RW '+esc(p.rtrw):''}, ${esc(p.kel)}, ${esc(p.kec)}, ${esc(p.kota)}, ${esc(p.prov)} ${esc(p.pos)}</dd>
+  <dt>Penjamin</dt><dd>${esc(p.penjamin)}</dd><dt>Kontak darurat</dt><dd>${esc(p.kontak.nama)} (${esc(p.kontak.hub)}) · ${esc(p.kontak.hp)}</dd></dl>
+  <button class="btn but sm" data-act="fhirP" data-id="${p.id}" style="margin-top:14px">Lihat format SATUSEHAT (FHIR)</button></div>`;
+}
+
+/* =========================================================
+   VIEWS — perawat
+   ========================================================= */
+function nHome(){
+ const t=today(),rjs=S.encounters.filter(e=>e.cls==='AMB'&&e.tanggal===t);
+ const wait=rjs.filter(e=>['planned','arrived'].includes(e.status)).length,serve=rjs.filter(e=>e.status==='in-progress').length;
+ const ris=S.encounters.filter(e=>e.cls==='IMP'&&e.status==='in-progress');
+ const pend=ris.reduce((a,e)=>a+e.mar.filter(m=>!m.given).length,0);
+ const late=ris.reduce((a,e)=>a+e.mar.filter(overdue).length,0);
+ const attn=ris.filter(e=>ttvWarn(lastTTV(e)));
+ const arrived=rjs.filter(e=>e.status==='arrived');
+ const shift=new Date().getHours()<14?'Shift pagi':new Date().getHours()<21?'Shift sore':'Shift malam';
+ return `<section class="hello">${dixa('md')}<div><h2>Selamat ${greet()}, ${esc(NURSE_S)}!</h2><p class="mut">${shift} · ${fmtD(t)}</p></div></section>
+ <div class="stats"><div class="stat"><b>${wait}</b><span>Antrean RJ menunggu</span></div><div class="stat"><b>${serve}</b><span>RJ sedang dilayani</span></div><div class="stat"><b>${ris.length}</b><span>Pasien rawat inap</span></div><div class="stat"><b>${pend}</b><span>Obat belum diberi</span></div></div>
+ <h3 class="sec">Perlu perhatian 👀</h3>
+ ${(attn.length||late||arrived.length)?'':empty('Semua aman terkendali','Belum ada yang perlu perhatian khusus. Mantap!')}
+ ${attn.map(e=>{const p=pat(e.patientId),x=lastTTV(e);return `<div class="card red clickable" data-act="openEnc" data-id="${e.id}"><b>⚠️ ${esc(p.nama)}</b> · Bed ${e.bed}<div class="sm">TTV terakhir di luar batas normal: TD ${x.sis}/${x.dia}, N ${x.nadi}, RR ${x.rr}, S ${x.suhu}°C, SpO₂ ${x.spo2}%</div></div>`}).join('')}
+ ${late?`<div class="card but clickable" data-act="nav" data-tab="ri"><b>⏰ ${late} obat terlambat</b><div class="sm">Cek jadwal obat pasien rawat inap.</div></div>`:''}
+ ${arrived.map(e=>`<div class="card lav clickable" data-act="nav" data-tab="rj"><b>🎟️ ${e.antrean} ${esc(pat(e.patientId).nama)}</b><div class="sm">Sudah check-in, menunggu pengkajian awal.</div></div>`).join('')}`;
+}
+function nRJ(){
+ const t=today(),order={arrived:0,'in-progress':1,planned:2,finished:3};
+ const list=S.encounters.filter(e=>e.cls==='AMB'&&e.tanggal===t&&e.status!=='cancelled').sort((a,b)=>order[a.status]-order[b.status]||a.jam.localeCompare(b.jam));
+ return `<h2 class="ttl">🩺 Antrean Rawat Jalan</h2><p class="mut">Hari ini, ${fmtD(t)}</p>
+ ${list.length?list.map(e=>visitCard(e,'nurse')).join(''):empty('Antrean hari ini kosong','Pasien yang mendaftar akan muncul di sini.')}
+ <button class="btn pink block" data-act="newVisit">+ Kunjungan baru untuk pasien</button>`;
+}
+function bedCard(b){
+ const e=bedOcc(b.id);
+ if(!e)return `<button class="bed" data-act="admitForm" data-bed="${b.id}"><span class="bn">Bed ${b.id}</span><span class="pn mut">Kosong</span><span class="sm mut">Ketuk untuk terima pasien ➕</span></button>`;
+ const p=pat(e.patientId),w=ttvWarn(lastTTV(e));
+ return `<button class="bed occ ${w?'alert':''}" data-act="openEnc" data-id="${e.id}"><span class="bn">Bed ${b.id} ${w?'⚠️':''}</span><span class="pn">${esc(p.nama)}</span><span class="sm mut">${age(p.lahir)} th · hari ke-${daysBetween(e.admitAt,today())+1}</span><span class="sm">${esc(e.keluhan.slice(0,42))}${e.keluhan.length>42?'…':''}</span></button>`;
+}
+function nRI(){
+ const occ=BEDS.filter(b=>bedOcc(b.id)).length;
+ return `<h2 class="ttl">🛏️ Rawat Inap</h2><p class="mut">${occ} dari ${BEDS.length} bed terisi. Ketuk bed untuk buka pasien atau terima pasien baru.</p>`+
+ ROOMS.map(([r,k])=>`<h3 class="sec">Ruang ${r} · ${k}</h3><div class="beds">${BEDS.filter(b=>b.room===r).map(bedCard).join('')}</div>`).join('');
+}
+function patList(q){
+ q=(q||'').toLowerCase().trim();
+ const l=S.patients.filter(p=>!q||p.nama.toLowerCase().includes(q)||p.nik.includes(q)||p.mrn.includes(q));
+ if(!l.length)return empty('Pasien tidak ditemukan','Coba kata kunci lain atau registrasikan pasien baru.');
+ return `<div class="card plist" style="padding:6px 14px">${l.map(p=>`<button class="row" data-act="patDetail" data-id="${p.id}"><div class="av" style="width:44px;height:44px;font-size:24px">${p.jk==='L'?'👦':'👧'}</div><div><b>${esc(p.nama)}</b><div class="sm mut">RM ${p.mrn} · ${age(p.lahir)} th · NIK ${maskNik(p.nik)}</div></div></button>`).join('')}</div>`;
+}
+function nPas(){
+ return `<h2 class="ttl">🧸 Pasien</h2>
+ <button class="btn pink block" data-act="newPatient">+ Registrasi pasien baru</button>
+ <div class="search"><input type="search" placeholder="Cari nama, NIK, atau no. RM" data-live="search"></div>
+ <div id="plist">${patList('')}</div>`;
+}
+
+/* ---------- detail kunjungan (perawat) ---------- */
+function alergiBanner(e){const a=hasAlergi(e);return a?`<div class="alergi">⚠️ Alergi: ${esc(a)}</div>`:''}
+function nEnc(){
+ const e=enc(UI.enc),p=pat(e.patientId),isI=e.cls==='IMP';
+ const tabs=[['ttv','💓 TTV'],['kaji','📝 Pengkajian'],['askep','🧩 Askep'],['cppt','🗒️ CPPT']].concat(isI?[['obat','💊 Obat'],['cairan','💧 Cairan'],['pulang','🏠 SBAR & Pulang']]:[]);
+ if(!tabs.some(t=>t[0]===UI.encTab))UI.encTab='ttv';
+ const fn={ttv:tTTV,kaji:tKaji,askep:tAskep,cppt:tCPPT,obat:tObat,cairan:tCairan,pulang:tPulang}[UI.encTab];
+ const [lbl,c]=stBadge(e),po=POLI.find(x=>x.id===e.poli);
+ return `<button class="btn ghost sm" data-act="closeEnc" style="margin-top:8px">← Kembali</button>
+ <div class="card"><div class="pat-head"><div class="av">${p.jk==='L'?'👦':'👧'}</div><div style="flex:1;min-width:0">
+  <div class="vtop"><h3 style="margin:0">${esc(p.nama)}</h3><span class="badge ${c}">${lbl}</span></div>
+  <div class="mut sm">${p.jk==='L'?'Tn.':'Ny./Nn.'} · ${age(p.lahir)} th · RM ${p.mrn} · ${esc(p.penjamin)}</div>
+  <div class="sm">${isI?'Bed '+e.bed:'🎟️ '+e.antrean+' · '+esc(po?po.nama:'')} · ${esc(e.dokter)}</div>
+  <div class="sm" style="margin-top:4px">“${esc(e.keluhan)}”</div></div></div>
+  ${alergiBanner(e)}
+  <div class="acts"><button class="btn but sm" data-act="fhirE" data-id="${e.id}">Format FHIR</button>${!isI&&e.status==='in-progress'?`<button class="btn mint sm" data-act="finishAmb" data-id="${e.id}">Selesaikan kunjungan ✅</button>`:''}</div></div>
+ <div class="tabs">${tabs.map(([k,l])=>`<button class="${UI.encTab===k?'on':''}" data-act="encTab" data-tab="${k}">${l}</button>`).join('')}</div>
+ ${fn(e,p)}`;
+}
+
+function tTTV(e){
+ const l=[...e.ttv].reverse(),v=k=>e.ttv.map(x=>+x[k]);
+ return `<div class="card"><h3>Catat TTV baru</h3><form class="form" data-submit="saveTTV">
+  <div class="row3"><div class="field"><label>Sistolik</label><input name="sis" type="number" inputmode="numeric" min="30" max="300" required></div><div class="field"><label>Diastolik</label><input name="dia" type="number" inputmode="numeric" min="20" max="200" required></div><div class="field"><label>Nadi /mnt</label><input name="nadi" type="number" inputmode="numeric" min="20" max="240" required></div></div>
+  <div class="row3"><div class="field"><label>RR /mnt</label><input name="rr" type="number" inputmode="numeric" min="4" max="80" required></div><div class="field"><label>Suhu °C</label><input name="suhu" type="number" step="0.1" inputmode="decimal" min="30" max="43" required></div><div class="field"><label>SpO₂ %</label><input name="spo2" type="number" inputmode="numeric" min="40" max="100" required></div></div>
+  <button class="btn mint block">Simpan TTV 💓</button></form></div>
+ ${e.ttv.length>1?`<div class="sparks"><div class="stat"><span>Tren suhu</span>${spark(v('suhu'),'#A8534A')}</div><div class="stat"><span>Tren nadi</span>${spark(v('nadi'),'#5E7391')}</div></div>`:''}
+ <div class="card"><h3>Riwayat TTV</h3>${l.length?`<div class="scroll-x"><table class="tbl"><thead><tr><th>Waktu</th><th>TD</th><th>N</th><th>RR</th><th>S</th><th>SpO₂</th></tr></thead><tbody>${l.map(x=>`<tr><td>${fmtDT(x.t)}</td><td class="${isWarn('sis',x.sis)||isWarn('dia',x.dia)?'w':''}">${x.sis}/${x.dia}</td><td class="${isWarn('nadi',x.nadi)?'w':''}">${x.nadi}</td><td class="${isWarn('rr',x.rr)?'w':''}">${x.rr}</td><td class="${isWarn('suhu',x.suhu)?'w':''}">${x.suhu}</td><td class="${isWarn('spo2',x.spo2)?'w':''}">${x.spo2}</td></tr>`).join('')}</tbody></table></div><p class="tiny" style="margin-top:8px">Sel merah = di luar batas normal dewasa (TD 90–140/60–90, N 60–100, RR 12–20, S 36–37,5, SpO₂ ≥95).</p>`:'<p class="mut">Belum ada TTV. Catat yang pertama ya.</p>'}</div>`;
+}
+function spark(vals,color){
+ if(vals.length<2)return '';
+ const w=220,h=56,p=7,mn=Math.min(...vals),mx=Math.max(...vals),r=(mx-mn)||1;
+ const pts=vals.map((v,i)=>[p+i*(w-2*p)/(vals.length-1),h-p-(v-mn)/r*(h-2*p)]);
+ return `<svg viewBox="0 0 ${w} ${h}" class="spark"><polyline points="${pts.map(q=>q.map(n=>n.toFixed(1)).join(',')).join(' ')}" fill="none" stroke="${color}" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>${pts.map(q=>`<circle cx="${q[0].toFixed(1)}" cy="${q[1].toFixed(1)}" r="3.5" fill="#fff" stroke="${color}" stroke-width="2.5"/>`).join('')}</svg><b style="font-family:var(--f1)">${vals[vals.length-1]}</b>`;
+}
+
+function tKaji(e){
+ const k=e.pengkajian||{},g=k.gcs||{e:4,m:6,v:5},m=k.morse||{};
+ const sel=(name,opts,cur)=>`<select name="${name}">${opts.map(([v,l])=>`<option value="${v}" ${String(cur)===String(v)?'selected':''}>${esc(l)}</option>`).join('')}</select>`;
+ return `<form class="form" id="kaji-form" data-submit="saveKaji" data-live="kaji">
+ <div class="card"><h3>📏 Antropometri & alergi</h3>
+  <div class="row2"><div class="field"><label>BB (kg)</label><input name="bb" type="number" step="0.1" inputmode="decimal" value="${k.bb??''}"></div><div class="field"><label>TB (cm)</label><input name="tb" type="number" step="0.1" inputmode="decimal" value="${k.tb??''}"></div></div>
+  <div class="calc"><span class="pill lav" id="bmi">IMT: -</span></div>
+  <div class="field"><label>Alergi <small>kosongkan jika tidak ada</small></label><input name="alergi" value="${esc(k.alergi||'')}" placeholder="Obat / makanan / lainnya"></div></div>
+ <div class="card"><h3>😣 Nyeri (NRS 0–10)</h3>
+  <div class="face" id="face">😊</div><input type="range" name="nyeri" min="0" max="10" value="${k.nyeri??0}">
+  <div class="calc"><span class="pill but" id="nyeriL">-</span></div>
+  <div class="field"><label>Lokasi / karakter nyeri</label><input name="lokasiNyeri" value="${esc(k.lokasiNyeri||'')}" placeholder="Contoh: perut kanan bawah, seperti ditusuk"></div></div>
+ <div class="card"><h3>🧠 GCS</h3>
+  ${Object.entries(GCS).map(([key,[lab,opts]])=>`<div class="field"><label>${lab}</label>${sel('g_'+key,opts,g[key])}</div>`).join('')}
+  <div class="calc"><span class="pill mint" id="gcsL">-</span></div></div>
+ <div class="card"><h3>🚶 Risiko jatuh (Morse)</h3>
+  ${MORSE.map(([key,lab,opts])=>`<div class="field"><label>${lab}</label>${sel('m_'+key,opts,m[key]??0)}</div>`).join('')}
+  <div class="calc"><span class="pill mint" id="morseL">-</span></div></div>
+ <div class="card"><h3>📝 Catatan pengkajian</h3><div class="field"><textarea name="catatan" rows="3" placeholder="Kondisi umum, keluhan tambahan, dll.">${esc(k.catatan||'')}</textarea></div>
+  <button class="btn mint block">Simpan pengkajian 💾</button>
+  ${k.t?`<p class="tiny center" style="margin-top:8px">Terakhir disimpan ${fmtDT(k.t)} oleh ${esc(k.by)}</p>`:''}</div>
+ </form>`;
+}
+
+function askepDyn(d){
+ if(!d)return '<p class="mut sm">Pilih diagnosis dulu untuk memunculkan luaran dan intervensi.</p>';
+ return `<div class="field"><label>Luaran (SLKI)</label><div class="pill lav">${d.slki[0]} · ${d.slki[1]}</div></div>
+ <div class="field"><label>Intervensi (SIKI) <small>centang yang dipakai</small></label>${d.siki.map(([k,n])=>`<label class="chk"><input type="checkbox" name="siki" value="${k}|${esc(n)}" checked><span>${k} · ${esc(n)}</span></label>`).join('')}</div>`;
+}
+function tAskep(e){
+ return `<div class="card"><h3>Diagnosis keperawatan</h3>${e.askep.length?e.askep.map(a=>`<div class="pes"><b>${esc(a.sdki.n)}</b> <span class="tiny">${a.sdki.k}</span>
+  <div class="sm">${a.risk?'dibuktikan dengan faktor risiko':'berhubungan dengan'} <b>${esc(a.etiologi)}</b>${!a.risk&&a.gejala?`, dibuktikan dengan <b>${esc(a.gejala)}</b>`:''}</div>
+  <div class="sm mut" style="margin-top:4px">Luaran: ${a.slki.k} ${esc(a.slki.n)}${a.target?' — '+esc(a.target):''}</div>
+  <ul class="sm">${a.siki.map(s=>`<li>${s.k} ${esc(s.n)}</li>`).join('')}</ul>
+  <div class="tiny">${fmtDT(a.t)} · ${esc(a.by)} <button class="badge red" data-act="delAskep" data-id="${a.id}" style="margin-left:6px">Hapus</button></div></div>`).join(''):'<p class="mut">Belum ada diagnosis. Tambahkan di bawah.</p>'}</div>
+ <div class="card"><h3>➕ Tambah diagnosis</h3><form class="form" data-submit="addAskep" data-live="askep">
+  <div class="field"><label>Diagnosis (SDKI)</label><select name="sdki" required><option value="">Pilih diagnosis</option>${SDKI.map(d=>`<option value="${d.k}">${d.k} · ${d.n}</option>`).join('')}</select></div>
+  <div class="field"><label>Penyebab / etiologi <small>(berhubungan dengan)</small></label><input name="etiologi" placeholder="Contoh: agen pencedera fisik" required></div>
+  <div class="field"><label id="gejalaL">Tanda & gejala <small>(dibuktikan dengan)</small></label><input name="gejala" placeholder="Contoh: mengeluh nyeri, skala 5, meringis"></div>
+  <div id="askepDyn">${askepDyn(null)}</div>
+  <div class="field"><label>Target luaran</label><input name="target" placeholder="Contoh: Setelah 3x24 jam, nyeri menurun (skala ≤3)"></div>
+  <button class="btn mint block">Simpan diagnosis 🧩</button></form>
+  <p class="tiny" style="margin-top:8px">Kode SDKI/SLKI/SIKI di sini contoh saja. Cek ulang ke buku standar PPNI sebelum dipakai untuk tugas.</p></div>`;
+}
+
+function tCPPT(e){
+ return `<div class="card"><h3>➕ Catatan baru (SOAP)</h3><form class="form" data-submit="addCppt">
+  <div class="field"><label>S · Subjektif</label><textarea name="s" rows="2" placeholder="Keluhan pasien"></textarea></div>
+  <div class="field"><label>O · Objektif</label><textarea name="o" rows="2" id="cpptO" placeholder="TTV, hasil observasi"></textarea><button type="button" class="btn ghost sm" data-act="fillO" style="margin-top:6px;align-self:flex-start">Isi dari TTV terakhir</button></div>
+  <div class="field"><label>A · Analisis</label><textarea name="a" rows="2" placeholder="Masalah keperawatan"></textarea></div>
+  <div class="field"><label>P · Perencanaan</label><textarea name="p" rows="2" placeholder="Rencana tindakan"></textarea></div>
+  <button class="btn mint block">Simpan CPPT 🗒️</button></form></div>
+ <h3 class="sec">Catatan sebelumnya</h3>
+ ${e.cppt.length?[...e.cppt].reverse().map(c=>`<div class="card soap"><div class="tiny" style="margin-bottom:6px">${fmtDT(c.t)} · ${esc(c.by)}</div><p><b>S</b>${esc(c.s)||'-'}</p><p><b>O</b>${esc(c.o)||'-'}</p><p><b>A</b>${esc(c.a)||'-'}</p><p><b>P</b>${esc(c.p)||'-'}</p></div>`).join(''):empty('Belum ada CPPT','Catatan perkembangan pasien terintegrasi akan muncul di sini.')}`;
+}
+
+function tObat(e){
+ const l=[...e.mar].sort((a,b)=>a.jam.localeCompare(b.jam));
+ return `${alergiBanner(e)}
+ <div class="card"><h3>💊 Jadwal obat hari ini</h3>${l.length?l.map(m=>`<div class="mar"><div><b>${esc(m.obat)}</b> <span class="sm">${esc(m.dosis)} · ${esc(m.rute)}</span><div class="sm mut">⏰ ${m.jam}${m.given?` · diberikan ${m.givenAt.slice(11,16)} oleh ${esc(m.by)}`:''}</div></div>
+  ${m.given?'<span class="badge ok">Sudah ✔</span>':`<div style="text-align:right">${overdue(m)?'<span class="badge red">Terlambat</span><br>':''}<button class="btn pink sm" data-act="giveMed" data-id="${m.id}" style="margin-top:4px">Beri obat</button></div>`}</div>`).join(''):'<p class="mut">Belum ada jadwal obat.</p>'}</div>
+ <div class="card"><h3>➕ Tambah jadwal obat</h3><form class="form" data-submit="addObat">
+  <div class="field"><label>Nama obat</label><input name="obat" required></div>
+  <div class="row3"><div class="field"><label>Dosis</label><input name="dosis" placeholder="500 mg" required></div><div class="field"><label>Rute</label><select name="rute"><option>PO</option><option>IV</option><option>IM</option><option>SC</option><option>Inhalasi</option><option>Topikal</option></select></div><div class="field"><label>Jam</label><input name="jam" type="time" required></div></div>
+  <button class="btn mint block">Simpan jadwal</button></form></div>`;
+}
+
+function tCairan(e){
+ const s=ioSum(e),l=[...ioToday(e)].reverse();
+ return `<div class="stats" style="grid-template-columns:repeat(3,1fr)"><div class="stat" style="background:var(--mint2)"><b>${s.in}</b><span>Masuk (ml)</span></div><div class="stat" style="background:var(--but2)"><b>${s.out}</b><span>Keluar (ml)</span></div><div class="stat" style="background:${s.bal<0?'var(--red2)':'var(--lav2)'}"><b>${s.bal>0?'+':''}${s.bal}</b><span>Balance (ml)</span></div></div>
+ <div class="card"><h3>➕ Catat intake / output</h3><form class="form" data-submit="addIO">
+  <div class="field"><div class="seg"><label><input type="radio" name="type" value="in" checked><span>⬇️ Masuk</span></label><label><input type="radio" name="type" value="out"><span>⬆️ Keluar</span></label></div></div>
+  <div class="row2"><div class="field"><label>Jenis</label><input name="label" list="iolist" placeholder="Minum, Infus, Urine..." required><datalist id="iolist"><option>Minum</option><option>Makan</option><option>Infus RL</option><option>Infus NaCl</option><option>Urine</option><option>Muntah</option><option>Drain</option><option>Feses cair</option></datalist></div><div class="field"><label>Jumlah (ml)</label><input name="ml" type="number" inputmode="numeric" min="1" required></div></div>
+  <button class="btn mint block">Simpan 💧</button></form></div>
+ <div class="card"><h3>Catatan hari ini</h3>${l.length?l.map(x=>`<div class="mar"><div><b>${x.type==='in'?'⬇️':'⬆️'} ${esc(x.label)}</b><div class="sm mut">${x.t.slice(11,16)}</div></div><b>${x.ml} ml</b></div>`).join(''):'<p class="mut">Belum ada catatan hari ini.</p>'}</div>`;
+}
+
+let LAST_SBAR='';
+function sbarData(e,p){
+ const t=lastTTV(e),k=e.pengkajian||{},io=ioSum(e),hari=daysBetween(e.admitAt,today())+1;
+ const dx=e.askep.map(a=>a.sdki.n).join(', ')||'belum ada diagnosis keperawatan';
+ const pend=e.mar.filter(m=>!m.given).length,siki=[...new Set(e.askep.flatMap(a=>a.siki.map(s=>s.n)))].slice(0,3).join(', ')||'sesuai rencana';
+ const ms=k.morse?morseTotal(k.morse):null;
+ return{
+  S:`${p.jk==='L'?'Tn.':'Ny./Nn.'} ${p.nama}, ${age(p.lahir)} th, RM ${p.mrn}, di bed ${e.bed}. Hari rawat ke-${hari} dengan keluhan ${e.keluhan}.`,
+  B:`DPJP ${e.dokter}. Alergi: ${hasAlergi(e)||'tidak ada / belum dikaji'}. Diagnosis keperawatan: ${dx}.`,
+  A:`${t?`TTV terakhir (${t.t.slice(11,16)}): TD ${t.sis}/${t.dia}, N ${t.nadi}, RR ${t.rr}, S ${t.suhu}°C, SpO₂ ${t.spo2}%${ttvWarn(t)?' (ada yang di luar batas normal)':''}.`:'TTV belum tercatat.'} ${k.nyeri!=null?`Nyeri ${k.nyeri}/10. `:''}${ms!=null?`Morse ${ms} (${morseLabel(ms)[0].toLowerCase()}). `:''}Balance cairan hari ini ${io.bal>0?'+':''}${io.bal} ml.`,
+  R:`Lanjutkan pemantauan TTV dan intervensi (${siki}). ${pend} obat belum diberikan hari ini.`
+ };
+}
+function tPulang(e,p){
+ const d=sbarData(e,p),ck=e.discharge||{},all=DISCH.every((_,i)=>ck[i]);
+ LAST_SBAR=`S: ${d.S}\nB: ${d.B}\nA: ${d.A}\nR: ${d.R}`;
+ return `<div class="card sbar"><h3>🔄 Handover SBAR</h3>${['S','B','A','R'].map(k=>`<p><b>${k}</b>${esc(d[k])}</p>`).join('')}
+  <button class="btn pink sm" data-act="copySbar">Salin teks SBAR 📋</button></div>
+ <div class="card"><h3>🏠 Discharge planning</h3>${DISCH.map((x,i)=>`<label class="chk"><input type="checkbox" data-act="toggleDis" data-i="${i}" ${ck[i]?'checked':''}><span>${x}</span></label>`).join('')}
+  <button class="btn mint block" data-act="pulangkan" ${all?'':'disabled'}>Pulangkan pasien 🎈</button>${all?'':'<p class="tiny center" style="margin-top:6px">Lengkapi semua checklist dulu ya.</p>'}</div>`;
+}
+
+/* =========================================================
+   UI plumbing: render, modal, toast
+   ========================================================= */
+function render(){
+ const app=$('#app');
+ if(!S.session)app.innerHTML=UI.screen==='login'?viewLogin():viewLanding();
+ else app.innerHTML=shell();
+ const kf=$('#kaji-form');if(kf)calcKaji(kf);
+}
+function toTop(){window.scrollTo({top:0})}
+function openModal(html){
+ $('#modal').innerHTML=`<div class="ov" data-act="closeModal"></div><div class="sheet" role="dialog" aria-modal="true"><button class="btn ghost sm x" data-act="closeModal">Tutup</button>${html}</div>`;
+ $('#modal').classList.add('on');document.body.classList.add('noscroll');
+}
+function closeModal(){$('#modal').classList.remove('on');$('#modal').innerHTML='';document.body.classList.remove('noscroll')}
+let CONFIRM_FN=null;
+function askConfirm(msg,fn){CONFIRM_FN=fn;openModal(`<h3>Yakin?</h3><p>${esc(msg)}</p><div class="acts" style="margin-top:14px"><button class="btn red sm" data-act="confirmYes">Ya</button><button class="btn ghost sm" data-act="closeModal">Batal</button></div>`)}
+let toastT;
+function toast(m){const t=$('#toast');t.textContent=m;t.classList.add('on');clearTimeout(toastT);toastT=setTimeout(()=>t.classList.remove('on'),2600)}
+function showJSON(title,obj){
+ const txt=JSON.stringify(obj,null,2);
+ openModal(`<h3>${title}</h3><p class="sm mut">Contoh struktur data ala SATUSEHAT (HL7 FHIR R4). MEDIXA belum terhubung ke SATUSEHAT, jadi id di dalam kurung kurawal masih placeholder.</p><pre class="json">${esc(txt)}</pre><button class="btn but sm" data-act="copyTxt" data-txt="${esc(txt)}">Salin JSON</button>`);
+}
+function copyText(t,msg){
+ const done=()=>toast(msg||'Tersalin 📋');
+ try{navigator.clipboard.writeText(t).then(done,()=>fallbackCopy(t,done))}catch(e){fallbackCopy(t,done)}
+}
+function fallbackCopy(t,done){const a=document.createElement('textarea');a.value=t;document.body.appendChild(a);a.select();try{document.execCommand('copy');done()}catch(e){toast('Gagal menyalin, salin manual ya')}a.remove()}
+
+/* ---------- FHIR builders (contoh struktur SATUSEHAT) ---------- */
+function fhirPatient(p){
+ const mar={S:'Never Married',M:'Married',D:'Divorced',W:'Widowed'};
+ return{resourceType:'Patient',
+  identifier:[{use:'official',system:'https://fhir.kemkes.go.id/id/nik',value:p.nik},{use:'usual',system:'http://sys-ids.kemkes.go.id/patient/{Org_id}',value:p.mrn}],
+  active:true,name:[{use:'official',text:p.nama}],
+  telecom:[{system:'phone',value:p.hp,use:'mobile'}],
+  gender:p.jk==='L'?'male':'female',birthDate:p.lahir,
+  address:[{use:'home',line:[p.alamat],city:p.kota,district:p.kec,state:p.prov,postalCode:p.pos,country:'ID'}],
+  maritalStatus:{coding:[{system:'http://terminology.hl7.org/CodeSystem/v3-MaritalStatus',code:p.marital,display:mar[p.marital]}]}};
+}
+function fhirEnc(e){
+ const p=pat(e.patientId),c=e.cls==='IMP'?['IMP','inpatient encounter']:['AMB','ambulatory'];
+ return{resourceType:'Encounter',
+  identifier:[{system:'http://sys-ids.kemkes.go.id/encounter/{Org_id}',value:e.id.toUpperCase()}],
+  status:e.status,class:{system:'http://terminology.hl7.org/CodeSystem/v3-ActCode',code:c[0],display:c[1]},
+  subject:{reference:'Patient/{IHS_number}',display:p.nama},
+  participant:[{type:[{coding:[{system:'http://terminology.hl7.org/CodeSystem/v3-ParticipationType',code:'ATND',display:'attender'}]}],individual:{reference:'Practitioner/{Practitioner_id}',display:e.dokter}}],
+  period:{start:`${e.tanggal}T${e.jam||'00:00'}:00+07:00`},
+  serviceProvider:{reference:'Organization/{Org_id}'}};
+}
+
+/* ---------- live calculators ---------- */
+function calcKaji(f){
+ const g=n=>f.elements[n];
+ const b=bmiInfo(+g('bb').value,+g('tb').value);
+ $('#bmi').textContent=b?`IMT ${b.v} · ${b.l}`:'IMT: isi BB & TB dulu';
+ const n=+g('nyeri').value;$('#face').textContent=FACES[n];$('#nyeriL').textContent=`${n}/10 · ${nyeriLabel(n)}`;
+ const gt=(+g('g_e').value)+(+g('g_m').value)+(+g('g_v').value);$('#gcsL').textContent=`GCS ${gt} · ${gcsLabel(gt)}`;
+ const mt=MORSE.reduce((a,[k])=>a+(+g('m_'+k).value),0),ml=morseLabel(mt);
+ const el=$('#morseL');el.textContent=`Skor ${mt} · ${ml[0]}`;el.className='pill '+(ml[1]==='red'?'red':ml[1]==='but'?'but':'mint');
+}
+const L={
+ reg(el,f){
+  if(el.name==='nik'){el.value=el.value.replace(/\D/g,'').slice(0,16)}
+  const nik=f.elements.nik.value;$('#nikc').textContent=nik.length+'/16';
+  const lahir=f.elements.lahir.value,h=$('#nikhint');
+  if(nik.length===16&&lahir){
+   const [y,m,d]=lahir.split('-'),dd=String(+d+(f.elements.jk.value==='P'?40:0)).padStart(2,'0'),exp=dd+m+y.slice(2);
+   h.textContent=nik.slice(6,12)===exp?'✅ NIK cocok dengan tanggal lahir & jenis kelamin':`⚠️ Digit ke-7 sampai 12 NIK biasanya ${exp} (tgl lahir, +40 untuk perempuan). Cek lagi ya, tapi tetap bisa disimpan.`;
+  }else h.textContent='';
+ },
+ kaji(el,f){calcKaji(f)},
+ askep(el,f){
+  if(el.name!=='sdki')return;
+  const d=SDKI.find(x=>x.k===el.value);
+  $('#askepDyn').innerHTML=askepDyn(d);
+  $('#gejalaL').innerHTML=d&&d.risk?'Faktor risiko <small>(dibuktikan dengan)</small>':'Tanda & gejala <small>(dibuktikan dengan)</small>';
+  f.elements.gejala.required=!!d&&!d.risk;
+ },
+ search(el){$('#plist').innerHTML=patList(el.value)}
+};
+
+/* =========================================================
+   CLICK actions
+   ========================================================= */
+const A={
+ pickRole(t){UI.role=t.dataset.role;UI.screen='login';UI.loginMode='in';render();toTop()},
+ backLanding(){UI.screen='landing';UI.role=null;render();toTop()},
+ loginMode(t){UI.loginMode=t.dataset.m;render()},
+ fillDemo(t){const f=$('form[data-submit=loginPatient]');f.elements.nik.value=t.dataset.nik;f.elements.pin.value=t.dataset.pin},
+ fillNurse(){const f=$('form[data-submit=loginNurse]');f.elements.u.value='perawat';f.elements.p.value='medixa123'},
+ logout(){S.session=null;UI.screen='landing';UI.enc=null;UI.tab='home';save();render();toTop()},
+ resetDemo(){askConfirm('Reset semua data demo ke awal?',()=>{S=seed();save();UI.screen='landing';render();toast('Data demo di-reset ✨')})},
+ confirmYes(){const f=CONFIRM_FN;CONFIRM_FN=null;closeModal();if(f)f()},
+ nav(t){UI.tab=t.dataset.tab;UI.enc=null;render();toTop()},
+ closeModal,
+ copyTxt(t){copyText(t.dataset.txt,'JSON tersalin 📋')},
+ fhirP(t){showJSON('Patient (FHIR)',fhirPatient(pat(t.dataset.id)))},
+ fhirE(t){showJSON('Encounter (FHIR)',fhirEnc(enc(t.dataset.id)))},
+
+ /* pasien */
+ rjPoli(t){
+  const f=t.closest('form');$$('.poli',f).forEach(b=>b.classList.toggle('on',b===t));
+  f.elements.poli.value=t.dataset.id;const po=POLI.find(x=>x.id===t.dataset.id),s=f.elements.dokter;
+  s.disabled=false;s.innerHTML=po.dokter.map(d=>`<option>${esc(d)}</option>`).join('');
+ },
+ visit(t){
+  const e=enc(t.dataset.id),po=POLI.find(x=>x.id===e.poli)||{nama:''},[l]=stBadge(e),x=lastTTV(e),k=e.pengkajian;
+  openModal(`<h3>${e.cls==='IMP'?'🛏️ Rawat Inap':'🩺 Rawat Jalan'} · ${esc(po.nama)}</h3>
+   <dl class="kv"><dt>Status</dt><dd>${l}</dd><dt>Tanggal</dt><dd>${fmtD(e.tanggal)}, ${e.jam}</dd><dt>Dokter</dt><dd>${esc(e.dokter)}</dd>${e.antrean?`<dt>No. antrean</dt><dd>${e.antrean}</dd>`:''}${e.bed?`<dt>Bed</dt><dd>${e.bed}</dd>`:''}<dt>Keluhan</dt><dd>${esc(e.keluhan)}</dd>
+   ${x?`<dt>TTV terakhir</dt><dd>TD ${x.sis}/${x.dia}, N ${x.nadi}, RR ${x.rr}, S ${x.suhu}°C, SpO₂ ${x.spo2}%</dd>`:''}${k&&k.nyeri!=null?`<dt>Skala nyeri</dt><dd>${k.nyeri}/10</dd>`:''}</dl>
+   <button class="btn but sm" data-act="fhirE" data-id="${e.id}" style="margin-top:14px">Format FHIR</button>`);
+ },
+ cancelVisit(t){const id=t.dataset.id;askConfirm('Batalkan kunjungan ini?',()=>{enc(id).status='cancelled';save();render();toast('Kunjungan dibatalkan')})},
+
+ /* perawat: antrean */
+ checkin(t){enc(t.dataset.id).status='arrived';save();render();toast('Pasien sudah check-in ✔️')},
+ startKaji(t){const e=enc(t.dataset.id);e.status='in-progress';UI.enc=e.id;UI.encTab='ttv';save();render();toTop();toast('Yuk mulai pengkajian 📝')},
+ openEnc(t){UI.enc=t.dataset.id;UI.encTab='ttv';render();toTop()},
+ closeEnc(){UI.enc=null;render();toTop()},
+ encTab(t){UI.encTab=t.dataset.tab;render()},
+ finishAmb(t){enc(t.dataset.id).status='finished';UI.enc=null;save();render();toTop();toast('Kunjungan selesai. Kerja bagus! 🎉')},
+ newVisit(){
+  openModal(`<h3>Kunjungan baru</h3><div class="field"><label>Pasien</label><select id="nvPat">${S.patients.map(p=>`<option value="${p.id}">${esc(p.nama)} · RM ${p.mrn}</option>`).join('')}</select></div><div id="nvForm">${visitForm(S.patients[0].id)}</div>`);
+  $('#nvPat').addEventListener('change',ev=>{$('#nvForm').innerHTML=visitForm(ev.target.value)});
+ },
+
+ /* perawat: rawat inap */
+ admitForm(t){
+  const free=S.patients.filter(p=>!activeIMP(p.id));
+  openModal(`<h3>Terima pasien di bed ${t.dataset.bed} 🛏️</h3><form class="form" data-submit="admit" data-bed="${t.dataset.bed}">
+   <div class="field"><label>Pasien</label><select name="pid" required>${free.map(p=>`<option value="${p.id}">${esc(p.nama)} · RM ${p.mrn}</option>`).join('')}</select></div>
+   <div class="field"><label>DPJP</label><select name="dokter">${ALLDOC.map(d=>`<option>${esc(d)}</option>`).join('')}</select></div>
+   <div class="field"><label>Diagnosis / keluhan masuk</label><textarea name="keluhan" rows="2" required></textarea></div>
+   <button class="btn mint block">Terima pasien</button></form>`);
+ },
+
+ /* perawat: pasien */
+ newPatient(){openModal(`<h3>Registrasi pasien baru 🧸</h3>${regForm('nurse')}`)},
+ patDetail(t){
+  const p=pat(t.dataset.id),es=encsOf(p.id).sort(byNewest);
+  openModal(`<div class="pat-head"><div class="av">${p.jk==='L'?'👦':'👧'}</div><div><h3 style="margin:0;padding:0">${esc(p.nama)}</h3><div class="mut sm">RM ${p.mrn} · ${age(p.lahir)} th · ${esc(p.penjamin)}</div></div></div>
+  <dl class="kv" style="margin-top:12px"><dt>NIK</dt><dd>${p.nik}</dd><dt>Lahir</dt><dd>${esc(p.tempat)}, ${fmtD(p.lahir)}</dd><dt>No. HP</dt><dd>${esc(p.hp)}</dd><dt>Alamat</dt><dd>${esc(p.alamat)}, ${esc(p.kel)}, ${esc(p.kec)}, ${esc(p.kota)}</dd><dt>Kontak darurat</dt><dd>${esc(p.kontak.nama)} (${esc(p.kontak.hub)}) · ${esc(p.kontak.hp)}</dd></dl>
+  <h3 class="sec">Kunjungan</h3>${es.length?es.map(e=>`<div class="mar"><div><b>${e.cls==='IMP'?'🛏️ Rawat inap':'🩺 Rawat jalan'}</b><div class="sm mut">${fmtD(e.tanggal)} · ${esc(e.keluhan.slice(0,40))}</div></div><span class="badge ${stBadge(e)[1]}">${stBadge(e)[0]}</span></div>`).join(''):'<p class="mut sm">Belum ada kunjungan.</p>'}
+  <div class="acts"><button class="btn pink sm" data-act="visitFor" data-id="${p.id}">Buat kunjungan RJ</button><button class="btn but sm" data-act="fhirP" data-id="${p.id}">Format FHIR</button></div>`);
+ },
+ visitFor(t){openModal(`<h3>Kunjungan rawat jalan</h3><p class="mut sm">${esc(pat(t.dataset.id).nama)}</p>${visitForm(t.dataset.id)}`)},
+
+ /* detail: askep, obat, dll */
+ delAskep(t){const e=enc(UI.enc);e.askep=e.askep.filter(a=>a.id!==t.dataset.id);save();render()},
+ fillO(){
+  const e=enc(UI.enc),x=lastTTV(e);if(!x)return toast('Belum ada TTV untuk diambil');
+  $('#cpptO').value=`TD ${x.sis}/${x.dia} mmHg, N ${x.nadi}x/menit, RR ${x.rr}x/menit, S ${x.suhu}°C, SpO₂ ${x.spo2}%`;
+ },
+ giveMed(t){
+  const e=enc(UI.enc),m=e.mar.find(x=>x.id===t.dataset.id);
+  openModal(`<h3>6 Benar dulu yuk! 💊</h3><p><b>${esc(m.obat)}</b> ${esc(m.dosis)} · ${esc(m.rute)} · jam ${m.jam}</p>${alergiBanner(e)}
+   <form class="form" data-submit="giveConfirm" data-id="${m.id}" style="margin-top:10px">
+   ${['Benar pasien','Benar obat','Benar dosis','Benar rute','Benar waktu','Benar dokumentasi'].map(x=>`<label class="chk"><input type="checkbox" required><span>${x}</span></label>`).join('')}
+   <button class="btn mint block">Sudah diberikan ✅</button></form>`);
+ },
+ toggleDis(t){const e=enc(UI.enc);e.discharge=e.discharge||{};e.discharge[t.dataset.i]=t.checked;save();render()},
+ copySbar(){copyText(LAST_SBAR,'SBAR tersalin 📋')},
+ pulangkan(){
+  askConfirm('Pulangkan pasien ini?',()=>{const e=enc(UI.enc);e.status='finished';e.dischargeAt=stamp();UI.enc=null;save();render();toTop();toast('Pasien pulang, bed kosong lagi 🎈')});
+ }
+};
+
+/* =========================================================
+   SUBMIT handlers
+   ========================================================= */
+const F={
+ loginPatient(f){
+  const d=Object.fromEntries(new FormData(f)),p=S.patients.find(x=>x.nik===d.nik&&x.pin===d.pin);
+  if(!p)return toast('NIK atau PIN belum cocok 🥺');
+  S.session={role:'patient',pid:p.id};UI.tab='home';save();render();toTop();toast(`Halo ${p.nama.split(' ')[0]}! 💖`);
+ },
+ loginNurse(f){
+  const d=Object.fromEntries(new FormData(f));
+  if(d.u.trim().toLowerCase()!=='perawat'||d.p!=='medixa123')return toast('Username atau password belum cocok 🥺');
+  S.session={role:'nurse'};UI.tab='home';UI.enc=null;save();render();toTop();toast(`Halo ${NURSE_S}! 💉`);
+ },
+ register(f){
+  const d=Object.fromEntries(new FormData(f)),self=f.dataset.mode==='self';
+  if(!/^\d{16}$/.test(d.nik))return toast('NIK harus 16 digit angka ya 🥺');
+  if(S.patients.some(p=>p.nik===d.nik))return toast('NIK ini sudah terdaftar 👀');
+  if(self&&!/^\d{6}$/.test(d.pin||''))return toast('PIN harus 6 digit angka');
+  const mrn=String(Math.max(0,...S.patients.map(p=>+p.mrn))+1).padStart(6,'0');
+  const p={id:'p'+uid(),mrn,nik:d.nik,nama:d.nama.trim(),jk:d.jk,tempat:d.tempat.trim(),lahir:d.lahir,marital:d.marital,hp:d.hp,alamat:d.alamat.trim(),rtrw:d.rtrw||'',kel:d.kel,kec:d.kec,kota:d.kota,prov:d.prov,pos:d.pos||'',kerja:(d.kerja||'').trim(),penjamin:d.penjamin,kontak:{nama:d.k_nama,hub:d.k_hub,hp:d.k_hp},pin:self?d.pin:'123456'};
+  S.patients.push(p);
+  if(self){S.session={role:'patient',pid:p.id};UI.tab='home'}
+  save();render();
+  openModal(`<div class="center">${dixa('md')}<h3 style="padding:0">Registrasi berhasil! 🎉</h3><div class="ticket"><div class="tiny">NOMOR REKAM MEDIS</div><div class="no">${p.mrn}</div><div class="sm">${esc(p.nama)}</div></div><p class="sm mut">Nomor SATUSEHAT (IHS) akan diisi setelah MEDIXA terhubung ke SATUSEHAT.</p><button class="btn pink block" data-act="closeModal">Siap!</button></div>`);
+ },
+ rjSubmit(f){
+  const d=Object.fromEntries(new FormData(f));
+  if(!d.poli)return toast('Pilih poli dulu ya 🩺');
+  const po=POLI.find(x=>x.id===d.poli),n=S.encounters.filter(e=>e.cls==='AMB'&&e.poli===po.id&&e.tanggal===d.tanggal).length+1;
+  const e=newEnc({patientId:f.dataset.pid,cls:'AMB',poli:po.id,dokter:d.dokter,tanggal:d.tanggal,jam:d.jam,keluhan:d.keluhan.trim(),status:'planned',antrean:`${po.kode}-${String(n).padStart(3,'0')}`});
+  S.encounters.push(e);save();render();
+  openModal(`<div class="center"><h3 style="padding:0">Kunjungan terdaftar! 🎟️</h3><div class="ticket"><div class="tiny">NOMOR ANTREAN</div><div class="no">${e.antrean}</div><div class="sm">${po.icon} ${esc(po.nama)} · ${esc(e.dokter)}</div><div class="sm">📅 ${fmtD(e.tanggal)}, ${e.jam}</div></div><p class="sm mut">Datang 15 menit lebih awal dan lapor ke perawat untuk check-in.</p><button class="btn pink block" data-act="closeModal">Oke!</button></div>`);
+ },
+ saveTTV(f){
+  const e=enc(UI.enc),d=Object.fromEntries(new FormData(f)),x={t:stamp(),by:NURSE_S};
+  ['sis','dia','nadi','rr','suhu','spo2'].forEach(k=>x[k]=+d[k]);
+  if(x.sis<=x.dia)return toast('Sistolik harus lebih besar dari diastolik ya');
+  e.ttv.push(x);save();render();
+  toast(ttvWarn(x)?'⚠️ Ada TTV di luar batas normal. Jangan lupa lapor DPJP ya!':'TTV tersimpan, semua normal 💓');
+ },
+ saveKaji(f){
+  const e=enc(UI.enc),d=Object.fromEntries(new FormData(f));
+  const morse={};MORSE.forEach(([k])=>morse[k]=+d['m_'+k]);
+  e.pengkajian={t:stamp(),by:NURSE_S,bb:d.bb?+d.bb:'',tb:d.tb?+d.tb:'',alergi:(d.alergi||'').trim(),nyeri:+d.nyeri,lokasiNyeri:(d.lokasiNyeri||'').trim(),gcs:{e:+d.g_e,m:+d.g_m,v:+d.g_v},morse,catatan:(d.catatan||'').trim()};
+  save();render();toast('Pengkajian tersimpan 💾');
+ },
+ addAskep(f){
+  const e=enc(UI.enc),d=Object.fromEntries(new FormData(f)),dx=SDKI.find(x=>x.k===d.sdki);
+  if(!dx)return toast('Pilih diagnosis dulu ya');
+  const siki=$$('input[name=siki]:checked',f).map(i=>{const [k,n]=i.value.split('|');return{k,n}});
+  if(!siki.length)return toast('Pilih minimal satu intervensi');
+  e.askep.push({id:'a'+uid(),sdki:{k:dx.k,n:dx.n},risk:!!dx.risk,etiologi:d.etiologi.trim(),gejala:(d.gejala||'').trim(),slki:{k:dx.slki[0],n:dx.slki[1]},target:(d.target||'').trim(),siki,t:stamp(),by:NURSE_S});
+  save();render();toast('Diagnosis tersimpan 🧩');
+ },
+ addCppt(f){
+  const e=enc(UI.enc),d=Object.fromEntries(new FormData(f));
+  if(!(d.s||d.o||d.a||d.p).trim())return toast('Isi minimal satu bagian SOAP ya');
+  e.cppt.push({id:'c'+uid(),t:stamp(),by:NURSE_S,s:d.s.trim(),o:d.o.trim(),a:d.a.trim(),p:d.p.trim()});
+  save();render();toast('CPPT tersimpan 🗒️');
+ },
+ addObat(f){
+  const e=enc(UI.enc),d=Object.fromEntries(new FormData(f));
+  e.mar.push({id:'m'+uid(),obat:d.obat.trim(),dosis:d.dosis.trim(),rute:d.rute,jam:d.jam,given:false});
+  save();render();toast('Jadwal obat ditambahkan 💊');
+ },
+ giveConfirm(f){
+  const e=enc(UI.enc),m=e.mar.find(x=>x.id===f.dataset.id);
+  m.given=true;m.givenAt=stamp();m.by=NURSE_S;save();closeModal();render();toast('Obat tercatat diberikan ✅');
+ },
+ addIO(f){
+  const e=enc(UI.enc),d=Object.fromEntries(new FormData(f));
+  e.io.push({id:'i'+uid(),t:stamp(),type:d.type,label:d.label.trim(),ml:+d.ml});
+  save();render();toast('Tercatat 💧');
+ },
+ admit(f){
+  const d=Object.fromEntries(new FormData(f));
+  if(bedOcc(f.dataset.bed))return toast('Bed ini sudah terisi');
+  const e=newEnc({patientId:d.pid,cls:'IMP',poli:'dalam',dokter:d.dokter,tanggal:today(),jam:hhmm(),keluhan:d.keluhan.trim(),status:'in-progress',antrean:'',bed:f.dataset.bed,admitAt:stamp()});
+  S.encounters.push(e);UI.enc=e.id;UI.encTab='kaji';save();closeModal();render();toTop();toast('Pasien diterima. Mulai dengan pengkajian ya 📝');
+ }
+};
+
+/* =========================================================
+   event wiring
+   ========================================================= */
+document.addEventListener('click',ev=>{
+ const t=ev.target.closest('[data-act]');if(!t)return;
+ const fn=A[t.dataset.act];if(!fn)return;
+ if(t.tagName==='BUTTON'||t.tagName==='DIV'||t.tagName==='INPUT'||t.tagName==='A')fn(t,ev);
+});
+const liveH=ev=>{const f=ev.target.closest('[data-live]');if(!f)return;const h=L[f.dataset.live];if(h)h(ev.target,f)};
+document.addEventListener('input',liveH);
+document.addEventListener('change',liveH);
+document.addEventListener('submit',ev=>{
+ const f=ev.target.closest('form[data-submit]');if(!f)return;
+ ev.preventDefault();const h=F[f.dataset.submit];if(h)h(f);
+});
+document.addEventListener('keydown',ev=>{if(ev.key==='Escape')closeModal()});
+
+/* mulai */
+document.title='MEDIXA · Rumah Sakit Mini';
+render();
+
+</script>
+</body>
+</html>
